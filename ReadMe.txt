@@ -1,0 +1,1 @@
+Strategy to sell Ce & Pe when mkt moves by change =250

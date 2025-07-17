@@ -1,0 +1,17 @@
+{
+    "accountStatus": "Activated",
+    "dpType": "NA",
+    "accountId": "AB154186",
+    "sBrokerName": "ALICEBLUE",
+    "product": [
+        "CNC",
+        "NRML",
+        "MIS",
+        "CO",
+        "BO"
+    ],
+    "accountName": "NIDHI MOYAL",
+    "cellAddr": "9529004040",
+    "emailAddr": "yogeshmoyal2004@gmail.com",
+    "exchEnabled": "bse_cm|bcs_fo|cde_fo|mcx_fo|nse_cm|nse_fo|bse_fo|"
+}

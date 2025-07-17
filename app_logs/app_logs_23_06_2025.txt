@@ -1,0 +1,16 @@
+23-06-2025 20:33:47- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+23-06-2025 20:33:47- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 114|thread: MainThread
+23-06-2025 20:33:47- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 122|thread: MainThread
+23-06-2025 20:33:47- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-06-23 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+23-06-2025 20:36:57- INFO| EMA_200_50: [
+    {
+        "Analysis_Date": "2025-06-23",
+        "Inst": "CDSL",
+        "Index": "smallcap100",
+        "Signal": "Buy",
+        "BT": 33008.95
+    }
+] | file:EMA_main.py|func:<module>|line: 202|thread: MainThread
+23-06-2025 20:36:57- INFO| EMA_200_50: 3 m | file:EMA_main.py|func:<module>|line: 205|thread: MainThread
+23-06-2025 20:36:57- INFO| EMA_200_50: Program finished.... | file:EMA_main.py|func:<module>|line: 206|thread: MainThread
+23-06-2025 20:36:57- INFO| TeleBot: stopping the notification message worker | file:Notification_Module.py|func:stop_worker|line: 31|thread: MainThread

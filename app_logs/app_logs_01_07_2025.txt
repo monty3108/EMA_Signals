@@ -1,0 +1,112 @@
+01-07-2025 17:56:00- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+01-07-2025 17:56:00- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 114|thread: MainThread
+01-07-2025 17:56:00- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 122|thread: MainThread
+01-07-2025 17:56:00- INFO| Alice Module: credentials imported from text file successfully. | file:Alice_Module.py|func:credentials|line: 79|thread: MainThread
+01-07-2025 17:56:01- ERROR| Alice Module: Error: 'sessionID'. Calling function again after 1 min. Log In your account using TOTP. | file:Alice_Module.py|func:session_id_generate|line: 147|thread: MainThread
+01-07-2025 17:56:01- ERROR| Alice Module: 'sessionID' | file:Alice_Module.py|func:session_id_generate|line: 148|thread: MainThread
+Traceback (most recent call last):
+  File "D:\my_coding\EMA\Alice_Module.py", line 120, in session_id_generate
+    session_id = response['sessionID']
+                 ~~~~~~~~^^^^^^^^^^^^^
+KeyError: 'sessionID'
+01-07-2025 17:57:01- INFO| Alice Module: Function Recalled. | file:Alice_Module.py|func:session_id_generate|line: 151|thread: MainThread
+01-07-2025 17:57:01- INFO| Alice Module: credentials imported from text file successfully. | file:Alice_Module.py|func:credentials|line: 79|thread: MainThread
+01-07-2025 17:57:02- INFO| Alice Module: Session Id generated | file:Alice_Module.py|func:session_id_generate|line: 123|thread: MainThread
+01-07-2025 17:57:02- INFO| Alice Module: alice obj: <pya3.alicebluepy.Aliceblue object at 0x000001CCB062C910> | file:Alice_Module.py|func:session_id_generate|line: 124|thread: MainThread
+01-07-2025 17:57:02- INFO| Alice Module: Downloading master contract...... | file:Alice_Module.py|func:session_id_generate|line: 130|thread: MainThread
+01-07-2025 17:57:05- INFO| Alice Module: Master contract Downloaded. | file:Alice_Module.py|func:session_id_generate|line: 133|thread: MainThread
+01-07-2025 17:57:05- INFO| EMA_200_50: Adding source started | file:EMA_main.py|func:<module>|line: 135|thread: MainThread
+01-07-2025 17:57:13- INFO| EMA_200_50: Source file added | file:EMA_main.py|func:<module>|line: 153|thread: MainThread
+01-07-2025 17:59:22- INFO| EMA_200_50: [
+    {
+        "Analysis_Date": "2025-06-30",
+        "Inst": "HCLTECH",
+        "Index": "nifty50",
+        "Signal": "Buy",
+        "BT": 10899.4
+    },
+    {
+        "Analysis_Date": "2025-06-30",
+        "Inst": "TRENT",
+        "Index": "nifty50",
+        "Signal": "Buy",
+        "BT": 102788.25
+    },
+    {
+        "Analysis_Date": "2025-06-30",
+        "Inst": "ICICIPRULI",
+        "Index": "nifty200",
+        "Signal": "Buy",
+        "BT": 9319.3
+    },
+    {
+        "Analysis_Date": "2025-06-30",
+        "Inst": "TRENT",
+        "Index": "nifty200",
+        "Signal": "Buy",
+        "BT": 102788.25
+    },
+    {
+        "Analysis_Date": "2025-06-30",
+        "Inst": "HCLTECH",
+        "Index": "nifty200",
+        "Signal": "Buy",
+        "BT": 10899.4
+    },
+    {
+        "Analysis_Date": "2025-06-30",
+        "Inst": "AMBUJACEM",
+        "Index": "nifty200",
+        "Signal": "Buy",
+        "BT": 10276.0
+    },
+    {
+        "Analysis_Date": "2025-06-30",
+        "Inst": "INDIAMART",
+        "Index": "smallcap100",
+        "Signal": "Buy",
+        "BT": 6655.15
+    }
+] | file:EMA_main.py|func:<module>|line: 203|thread: MainThread
+01-07-2025 17:59:22- INFO| EMA_200_50: 3 m | file:EMA_main.py|func:<module>|line: 206|thread: MainThread
+01-07-2025 17:59:22- INFO| EMA_200_50: Program finished.... | file:EMA_main.py|func:<module>|line: 207|thread: MainThread
+01-07-2025 17:59:22- INFO| TeleBot: stopping the notification message worker | file:Notification_Module.py|func:stop_worker|line: 31|thread: MainThread
+01-07-2025 18:00:53- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+01-07-2025 18:00:53- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 114|thread: MainThread
+01-07-2025 18:00:53- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 122|thread: MainThread
+01-07-2025 18:00:53- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-01 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+01-07-2025 18:00:53- INFO| EMA_200_50: Adding source started | file:EMA_main.py|func:<module>|line: 135|thread: MainThread
+01-07-2025 18:01:01- INFO| EMA_200_50: Source file added | file:EMA_main.py|func:<module>|line: 153|thread: MainThread
+01-07-2025 18:04:29- INFO| EMA_200_50: [
+    {
+        "Analysis_Date": "2025-07-01",
+        "Inst": "POLYCAB",
+        "Index": "nifty200",
+        "Signal": "Buy",
+        "BT": 51437.7
+    },
+    {
+        "Analysis_Date": "2025-07-01",
+        "Inst": "POLYCAB",
+        "Index": "midcap100",
+        "Signal": "Buy",
+        "BT": 51437.7
+    },
+    {
+        "Analysis_Date": "2025-07-01",
+        "Inst": "KEC",
+        "Index": "smallcap100",
+        "Signal": "Buy",
+        "BT": 13720.35
+    },
+    {
+        "Analysis_Date": "2025-07-01",
+        "Inst": "MGL",
+        "Index": "smallcap100",
+        "Signal": "Buy",
+        "BT": 10380.05
+    }
+] | file:EMA_main.py|func:<module>|line: 203|thread: MainThread
+01-07-2025 18:04:29- INFO| EMA_200_50: 4 m | file:EMA_main.py|func:<module>|line: 206|thread: MainThread
+01-07-2025 18:04:29- INFO| EMA_200_50: Program finished.... | file:EMA_main.py|func:<module>|line: 207|thread: MainThread
+01-07-2025 18:04:29- INFO| TeleBot: stopping the notification message worker | file:Notification_Module.py|func:stop_worker|line: 31|thread: MainThread

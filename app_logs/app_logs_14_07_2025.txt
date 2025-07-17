@@ -1,0 +1,373 @@
+14-07-2025 13:10:01- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 13:10:01- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 114|thread: MainThread
+14-07-2025 13:10:01- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 122|thread: MainThread
+14-07-2025 13:11:26- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 13:11:26- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 114|thread: MainThread
+14-07-2025 13:11:26- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 122|thread: MainThread
+14-07-2025 13:11:26- ERROR| EMA_200_50: 'NoneType' object has no attribute 'get_instrument_by_symbol' | file:EMA_main.py|func:symbol_list_to_inst_list|line: 62|thread: MainThread
+Traceback (most recent call last):
+  File "D:\my_coding\EMA\EMA_main.py", line 58, in symbol_list_to_inst_list
+    symbol['inst'] = config.alice.get_instrument_by_symbol(exchange='NSE', symbol=symbol['symbol'])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get_instrument_by_symbol'
+14-07-2025 13:12:04- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 13:12:04- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 114|thread: MainThread
+14-07-2025 13:12:04- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 122|thread: MainThread
+14-07-2025 13:12:04- ERROR| EMA_200_50: 'NoneType' object has no attribute 'get_instrument_by_symbol' | file:EMA_main.py|func:symbol_list_to_inst_list|line: 62|thread: MainThread
+Traceback (most recent call last):
+  File "D:\my_coding\EMA\EMA_main.py", line 58, in symbol_list_to_inst_list
+    symbol['inst'] = config.alice.get_instrument_by_symbol(exchange='NSE', symbol=symbol['symbol'])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get_instrument_by_symbol'
+14-07-2025 13:12:30- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 13:12:30- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 114|thread: MainThread
+14-07-2025 13:12:30- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 122|thread: MainThread
+14-07-2025 13:12:30- INFO| Alice Module: credentials imported from text file successfully. | file:Alice_Module.py|func:credentials|line: 79|thread: MainThread
+14-07-2025 13:12:31- ERROR| Alice Module: Error: 'sessionID'. Calling function again after 1 min. Log In your account using TOTP. | file:Alice_Module.py|func:session_id_generate|line: 147|thread: MainThread
+14-07-2025 13:12:31- ERROR| Alice Module: 'sessionID' | file:Alice_Module.py|func:session_id_generate|line: 148|thread: MainThread
+Traceback (most recent call last):
+  File "D:\my_coding\EMA\Alice_Module.py", line 120, in session_id_generate
+    session_id = response['sessionID']
+                 ~~~~~~~~^^^^^^^^^^^^^
+KeyError: 'sessionID'
+14-07-2025 13:13:31- INFO| Alice Module: Function Recalled. | file:Alice_Module.py|func:session_id_generate|line: 151|thread: MainThread
+14-07-2025 13:13:31- INFO| Alice Module: credentials imported from text file successfully. | file:Alice_Module.py|func:credentials|line: 79|thread: MainThread
+14-07-2025 13:13:32- INFO| Alice Module: Session Id generated | file:Alice_Module.py|func:session_id_generate|line: 123|thread: MainThread
+14-07-2025 13:13:32- INFO| Alice Module: alice obj: <pya3.alicebluepy.Aliceblue object at 0x00000174DDDBC910> | file:Alice_Module.py|func:session_id_generate|line: 124|thread: MainThread
+14-07-2025 13:13:32- INFO| Alice Module: Downloading master contract...... | file:Alice_Module.py|func:session_id_generate|line: 130|thread: MainThread
+14-07-2025 13:13:33- INFO| Alice Module: Master contract Downloaded. | file:Alice_Module.py|func:session_id_generate|line: 133|thread: MainThread
+14-07-2025 13:13:33- ERROR| EMA_200_50: string indices must be integers, not 'str' | file:EMA_main.py|func:symbol_list_to_inst_list|line: 62|thread: MainThread
+Traceback (most recent call last):
+  File "D:\my_coding\EMA\EMA_main.py", line 58, in symbol_list_to_inst_list
+    symbol['inst'] = config.alice.get_instrument_by_symbol(exchange='NSE', symbol=symbol['symbol'])
+                                                                                  ~~~~~~^^^^^^^^^^
+TypeError: string indices must be integers, not 'str'
+14-07-2025 13:16:19- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 13:16:19- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 114|thread: MainThread
+14-07-2025 13:16:19- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 122|thread: MainThread
+14-07-2025 13:16:19- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 13:20:09- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 13:20:09- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 114|thread: MainThread
+14-07-2025 13:20:09- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 122|thread: MainThread
+14-07-2025 13:20:09- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 13:22:15- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 13:22:15- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 114|thread: MainThread
+14-07-2025 13:22:15- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 122|thread: MainThread
+14-07-2025 13:22:15- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 13:24:56- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 13:24:56- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 114|thread: MainThread
+14-07-2025 13:24:56- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 122|thread: MainThread
+14-07-2025 13:24:56- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 13:25:16- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 13:25:16- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 114|thread: MainThread
+14-07-2025 13:25:16- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 122|thread: MainThread
+14-07-2025 13:25:16- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 15:28:52- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 15:28:52- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 114|thread: MainThread
+14-07-2025 15:28:52- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 122|thread: MainThread
+14-07-2025 15:29:07- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 16:02:15- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 16:02:15- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 114|thread: MainThread
+14-07-2025 16:02:15- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 122|thread: MainThread
+14-07-2025 16:02:15- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 16:06:28- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 16:06:28- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 114|thread: MainThread
+14-07-2025 16:06:28- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 122|thread: MainThread
+14-07-2025 16:06:28- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 16:12:38- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 16:12:38- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 114|thread: MainThread
+14-07-2025 16:12:38- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 122|thread: MainThread
+14-07-2025 16:12:38- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 16:13:09- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 16:13:09- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 114|thread: MainThread
+14-07-2025 16:13:09- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 122|thread: MainThread
+14-07-2025 16:13:09- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 16:13:56- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 16:13:56- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 114|thread: MainThread
+14-07-2025 16:13:56- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 122|thread: MainThread
+14-07-2025 16:13:56- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 16:14:35- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 16:14:35- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 114|thread: MainThread
+14-07-2025 16:14:35- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 122|thread: MainThread
+14-07-2025 16:14:49- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 16:22:08- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 16:22:08- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 114|thread: MainThread
+14-07-2025 16:22:08- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 122|thread: MainThread
+14-07-2025 16:22:08- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 16:24:30- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 16:24:30- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 114|thread: MainThread
+14-07-2025 16:24:30- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 122|thread: MainThread
+14-07-2025 16:24:30- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 16:27:03- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 16:27:03- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 114|thread: MainThread
+14-07-2025 16:27:03- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 122|thread: MainThread
+14-07-2025 16:27:03- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 16:38:34- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 16:38:34- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 131|thread: MainThread
+14-07-2025 16:38:34- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 139|thread: MainThread
+14-07-2025 16:38:34- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 16:38:36- INFO| TeleBot: dataframe_output_tabulate_grid.txt sent to Bot. | file:Notification_Module.py|func:send_docs|line: 111|thread: MainThread
+14-07-2025 16:40:14- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 16:40:14- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 131|thread: MainThread
+14-07-2025 16:40:14- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 139|thread: MainThread
+14-07-2025 16:40:14- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 16:40:16- INFO| TeleBot: dataframe_output_tabulate_grid.txt sent to Bot. | file:Notification_Module.py|func:send_docs|line: 111|thread: MainThread
+14-07-2025 16:45:58- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 16:45:58- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 131|thread: MainThread
+14-07-2025 16:45:58- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 139|thread: MainThread
+14-07-2025 16:46:03- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 17:01:03- INFO| TeleBot: dataframe_output_tabulate_grid.txt sent to Bot. | file:Notification_Module.py|func:send_docs|line: 111|thread: MainThread
+14-07-2025 17:46:42- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 17:46:42- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 131|thread: MainThread
+14-07-2025 17:46:42- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 139|thread: MainThread
+14-07-2025 18:00:43- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 18:00:43- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 131|thread: MainThread
+14-07-2025 18:00:43- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 139|thread: MainThread
+14-07-2025 18:00:43- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 18:02:04- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 18:02:04- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 131|thread: MainThread
+14-07-2025 18:02:04- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 139|thread: MainThread
+14-07-2025 18:02:04- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 18:02:45- ERROR| TeleBot: Error: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)) | file:Notification_Module.py|func:send_docs|line: 114|thread: MainThread
+Traceback (most recent call last):
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
+    response = self._make_request(
+        conn,
+    ...<10 lines>...
+        **response_kw,
+    )
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connectionpool.py", line 490, in _make_request
+    raise new_e
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connectionpool.py", line 466, in _make_request
+    self._validate_conn(conn)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connectionpool.py", line 1095, in _validate_conn
+    conn.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connection.py", line 730, in connect
+    sock_and_verified = _ssl_wrap_socket_and_match_hostname(
+        sock=sock,
+    ...<14 lines>...
+        assert_fingerprint=self.assert_fingerprint,
+    )
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connection.py", line 909, in _ssl_wrap_socket_and_match_hostname
+    ssl_sock = ssl_wrap_socket(
+        sock=sock,
+    ...<8 lines>...
+        tls_in_tls=tls_in_tls,
+    )
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\util\ssl_.py", line 469, in ssl_wrap_socket
+    ssl_sock = _ssl_wrap_socket_impl(sock, context, tls_in_tls, server_hostname)
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\util\ssl_.py", line 513, in _ssl_wrap_socket_impl
+    return ssl_context.wrap_socket(sock, server_hostname=server_hostname)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\ssl.py", line 455, in wrap_socket
+    return self.sslsocket_class._create(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sock=sock,
+        ^^^^^^^^^^
+    ...<5 lines>...
+        session=session
+        ^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\ssl.py", line 1076, in _create
+    self.do_handshake()
+    ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\ssl.py", line 1372, in do_handshake
+    self._sslobj.do_handshake()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\adapters.py", line 667, in send
+    resp = conn.urlopen(
+        method=request.method,
+    ...<9 lines>...
+        chunked=chunked,
+    )
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connectionpool.py", line 843, in urlopen
+    retries = retries.increment(
+        method, url, error=new_e, _pool=self, _stacktrace=sys.exc_info()[2]
+    )
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\util\retry.py", line 474, in increment
+    raise reraise(type(error), error, _stacktrace)
+          ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\util\util.py", line 38, in reraise
+    raise value.with_traceback(tb)
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
+    response = self._make_request(
+        conn,
+    ...<10 lines>...
+        **response_kw,
+    )
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connectionpool.py", line 490, in _make_request
+    raise new_e
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connectionpool.py", line 466, in _make_request
+    self._validate_conn(conn)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connectionpool.py", line 1095, in _validate_conn
+    conn.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connection.py", line 730, in connect
+    sock_and_verified = _ssl_wrap_socket_and_match_hostname(
+        sock=sock,
+    ...<14 lines>...
+        assert_fingerprint=self.assert_fingerprint,
+    )
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connection.py", line 909, in _ssl_wrap_socket_and_match_hostname
+    ssl_sock = ssl_wrap_socket(
+        sock=sock,
+    ...<8 lines>...
+        tls_in_tls=tls_in_tls,
+    )
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\util\ssl_.py", line 469, in ssl_wrap_socket
+    ssl_sock = _ssl_wrap_socket_impl(sock, context, tls_in_tls, server_hostname)
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\util\ssl_.py", line 513, in _ssl_wrap_socket_impl
+    return ssl_context.wrap_socket(sock, server_hostname=server_hostname)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\ssl.py", line 455, in wrap_socket
+    return self.sslsocket_class._create(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sock=sock,
+        ^^^^^^^^^^
+    ...<5 lines>...
+        session=session
+        ^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\ssl.py", line 1076, in _create
+    self.do_handshake()
+    ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\ssl.py", line 1372, in do_handshake
+    self._sslobj.do_handshake()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+urllib3.exceptions.ProtocolError: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\my_coding\EMA\Notification_Module.py", line 109, in send_docs
+    response = requests.post(url, data={'chat_id': bot_chat_id}, files={'document': document})
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\adapters.py", line 682, in send
+    raise ConnectionError(err, request=request)
+requests.exceptions.ConnectionError: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+14-07-2025 18:03:22- INFO| TeleBot: pkl_obj/position.txt sent to Bot. | file:Notification_Module.py|func:send_docs|line: 111|thread: MainThread
+14-07-2025 18:04:14- INFO| EMA_200_50: Adding source started | file:EMA_main_final.py|func:get_ema_signals|line: 229|thread: MainThread
+14-07-2025 18:04:22- INFO| EMA_200_50: Source file added | file:EMA_main_final.py|func:get_ema_signals|line: 256|thread: MainThread
+14-07-2025 18:05:33- ERROR| Alice Module: Expecting value: line 1 column 1 (char 0) | file:Alice_Module.py|func:history_resample|line: 1093|thread: MainThread
+Traceback (most recent call last):
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\models.py", line 974, in json
+    return complexjson.loads(self.text, **kwargs)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\json\decoder.py", line 344, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\json\decoder.py", line 362, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\my_coding\EMA\Alice_Module.py", line 1035, in history_resample
+    raw_data1 = config.alice.get_historical(instrument=inst, from_datetime=from_date1, to_datetime=to_date1,
+                                           interval="1", indices=indices)
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\pya3\alicebluepy.py", line 843, in get_historical
+    response=lst.json()
+  File "C:\Users\yoges\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\models.py", line 978, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+14-07-2025 18:05:33- ERROR| EMA_200_50: 'NoneType' object has no attribute 'tail' | file:EMA_main_final.py|func:get_ema_signals|line: 305|thread: MainThread
+Traceback (most recent call last):
+  File "D:\my_coding\EMA\EMA_main_final.py", line 272, in get_ema_signals
+    logger.debug(f'\n {df.tail(2)}')
+                       ^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'tail'
+14-07-2025 18:08:14- INFO| EMA_200_50: [
+    {
+        "Analysis_Date": "2025-07-14",
+        "Inst": "TRENT",
+        "Index": "nifty50",
+        "Signal": "Sell",
+        "BT": 102788.25
+    },
+    {
+        "Analysis_Date": "2025-07-14",
+        "Inst": "TRENT",
+        "Index": "nifty200",
+        "Signal": "Sell",
+        "BT": 102788.25
+    }
+] | file:EMA_main_final.py|func:get_ema_signals|line: 308|thread: MainThread
+14-07-2025 18:08:14- INFO| EMA_200_50: 6 m | file:EMA_main_final.py|func:get_ema_signals|line: 311|thread: MainThread
+14-07-2025 18:11:39- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 18:11:39- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 131|thread: MainThread
+14-07-2025 18:11:39- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 139|thread: MainThread
+14-07-2025 18:11:39- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 18:15:04- INFO| TeleBot: pkl_obj/position.txt sent to Bot. | file:Notification_Module.py|func:send_docs|line: 111|thread: MainThread
+14-07-2025 18:21:28- INFO| TeleBot: pkl_obj/position.txt sent to Bot. | file:Notification_Module.py|func:send_docs|line: 111|thread: MainThread
+14-07-2025 18:29:00- INFO| TeleBot: pkl_obj/position.txt sent to Bot. | file:Notification_Module.py|func:send_docs|line: 111|thread: MainThread
+14-07-2025 18:37:11- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 18:37:11- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 131|thread: MainThread
+14-07-2025 18:37:11- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 139|thread: MainThread
+14-07-2025 18:37:11- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 18:39:09- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 18:39:09- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 131|thread: MainThread
+14-07-2025 18:39:09- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 139|thread: MainThread
+14-07-2025 18:39:09- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 18:41:25- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 18:41:25- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 131|thread: MainThread
+14-07-2025 18:41:25- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 139|thread: MainThread
+14-07-2025 18:41:25- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 19:07:08- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 19:07:08- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 131|thread: MainThread
+14-07-2025 19:07:08- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 139|thread: MainThread
+14-07-2025 19:07:08- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 19:07:27- INFO| TeleBot: pkl_obj/position.txt sent to Bot. | file:Notification_Module.py|func:send_docs|line: 111|thread: MainThread
+14-07-2025 19:09:37- INFO| EMA_200_50: Program finished.... | file:<string>|func:<module>|line: 359|thread: MainThread
+14-07-2025 19:09:37- INFO| TeleBot: stopping the notification message worker | file:Notification_Module.py|func:stop_worker|line: 31|thread: MainThread
+14-07-2025 19:10:08- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 19:10:08- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 131|thread: MainThread
+14-07-2025 19:10:08- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 139|thread: MainThread
+14-07-2025 19:10:08- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 19:10:43- INFO| EMA_200_50: Source file added | file:<string>|func:get_ema_signals|line: 256|thread: MainThread
+14-07-2025 19:15:19- INFO| EMA_200_50: [
+    {
+        "Analysis_Date": "2025-07-14",
+        "Inst": "TRENT",
+        "Index": "nifty50",
+        "Signal": "Sell",
+        "BT": 102788.25
+    },
+    {
+        "Analysis_Date": "2025-07-14",
+        "Inst": "TRENT",
+        "Index": "nifty200",
+        "Signal": "Sell",
+        "BT": 102788.25
+    }
+] | file:<string>|func:get_ema_signals|line: 308|thread: MainThread
+14-07-2025 19:15:19- INFO| EMA_200_50: 5 m | file:<string>|func:get_ema_signals|line: 311|thread: MainThread
+14-07-2025 19:16:04- INFO| EMA_200_50: Program finished.... | file:<string>|func:<module>|line: 359|thread: MainThread
+14-07-2025 19:16:04- INFO| TeleBot: stopping the notification message worker | file:Notification_Module.py|func:stop_worker|line: 31|thread: MainThread
+14-07-2025 22:45:32- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+14-07-2025 22:45:32- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 131|thread: MainThread
+14-07-2025 22:45:32- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 139|thread: MainThread
+14-07-2025 22:45:32- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-14 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+14-07-2025 22:50:39- INFO| EMA_200_50: Program finished.... | file:<string>|func:<module>|line: 359|thread: MainThread
+14-07-2025 22:50:39- INFO| TeleBot: stopping the notification message worker | file:Notification_Module.py|func:stop_worker|line: 31|thread: MainThread

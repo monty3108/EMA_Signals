@@ -1,0 +1,7 @@
+19-May-25 18:11:04- WARNING: The chromedriver version (131.0.6778.85) detected in PATH at C:\webdriver\chromedriver.exe might not be compatible with the detected chrome version (136.0.7103.114); currently, chromedriver 136.0.7103.94 is recommended for chrome 136.*, so it is advised to delete the driver in PATH and retry | file:selenium_manager.py|func:_process_logs|line: 138|thread: MainThread
+22-May-25 17:28:28- INFO: generated new fontManager | file:font_manager.py|func:_load_fontmanager|line: 1639|thread: MainThread
+07-Jun-25 11:00:34- INFO: resampled data of Instrument(exchange='NSE', token=np.float64(3045.0), symbol='SBIN', name='SBIN-EQ', expiry='', lot_size=np.float64(1.0)) to period 1d. | file:Alice_Module.py|func:history_resample|line: 1060|thread: MainThread
+20-Jun-25 19:55:59- INFO: breaking loop | file:EMA_main.py|func:<module>|line: 162|thread: MainThread
+20-Jun-25 20:10:30- INFO: breaking loop | file:EMA_main.py|func:<module>|line: 162|thread: MainThread
+23-Jun-25 20:12:58- INFO: breaking loop | file:EMA_main.py|func:<module>|line: 162|thread: MainThread
+23-Jun-25 20:16:06- INFO: breaking loop | file:EMA_main.py|func:<module>|line: 162|thread: MainThread

@@ -1,0 +1,92 @@
+15-07-2025 07:53:29- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+15-07-2025 07:53:29- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 131|thread: MainThread
+15-07-2025 07:53:29- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 139|thread: MainThread
+15-07-2025 07:53:29- INFO| Alice Module: credentials imported from text file successfully. | file:Alice_Module.py|func:credentials|line: 79|thread: MainThread
+15-07-2025 07:53:31- ERROR| Alice Module: Error: 'sessionID'. Calling function again after 1 min. Log In your account using TOTP. | file:Alice_Module.py|func:session_id_generate|line: 147|thread: MainThread
+15-07-2025 07:53:31- ERROR| Alice Module: 'sessionID' | file:Alice_Module.py|func:session_id_generate|line: 148|thread: MainThread
+Traceback (most recent call last):
+  File "/storage/emulated/0/Documents/Python_projects/EMA/Alice_Module.py", line 120, in session_id_generate
+    session_id = response['sessionID']
+                 ~~~~~~~~^^^^^^^^^^^^^
+KeyError: 'sessionID'
+15-07-2025 07:54:31- INFO| Alice Module: Function Recalled. | file:Alice_Module.py|func:session_id_generate|line: 151|thread: MainThread
+15-07-2025 07:54:31- INFO| Alice Module: credentials imported from text file successfully. | file:Alice_Module.py|func:credentials|line: 79|thread: MainThread
+15-07-2025 07:54:32- INFO| Alice Module: Session Id generated | file:Alice_Module.py|func:session_id_generate|line: 123|thread: MainThread
+15-07-2025 07:54:32- INFO| Alice Module: alice obj: <pya3.alicebluepy.Aliceblue object at 0x72c0cf7d90> | file:Alice_Module.py|func:session_id_generate|line: 124|thread: MainThread
+15-07-2025 07:54:32- INFO| Alice Module: Downloading master contract...... | file:Alice_Module.py|func:session_id_generate|line: 130|thread: MainThread
+15-07-2025 07:54:33- ERROR| Alice Module: Error: 'module' object is not callable. Did you mean: 'time.time(...)'?. Calling function again after 1 min. Log In your account using TOTP. | file:Alice_Module.py|func:session_id_generate|line: 147|thread: MainThread
+15-07-2025 07:54:33- ERROR| Alice Module: 'module' object is not callable. Did you mean: 'time.time(...)'? | file:Alice_Module.py|func:session_id_generate|line: 148|thread: MainThread
+Traceback (most recent call last):
+  File "/storage/emulated/0/Documents/Python_projects/EMA/Alice_Module.py", line 120, in session_id_generate
+    session_id = response['sessionID']
+                 ~~~~~~~~^^^^^^^^^^^^^
+KeyError: 'sessionID'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/storage/emulated/0/Documents/Python_projects/EMA/Alice_Module.py", line 132, in session_id_generate
+    get_master_contract()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/storage/emulated/0/Documents/Python_projects/EMA/Alice_Module.py", line 156, in get_master_contract
+    alice.get_contract_master("NFO")
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.13/site-packages/pya3/alicebluepy.py", line 545, in get_contract_master
+    if time(8, 00) <= datetime.now().time() or True:
+       ~~~~^^^^^^^
+TypeError: 'module' object is not callable. Did you mean: 'time.time(...)'?
+15-07-2025 07:55:04- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+15-07-2025 07:55:04- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 131|thread: MainThread
+15-07-2025 07:55:04- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 139|thread: MainThread
+15-07-2025 07:55:04- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-15 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+15-07-2025 07:56:48- INFO| TeleBot: pkl_obj/position.txt sent to Bot. | file:Notification_Module.py|func:send_docs|line: 111|thread: MainThread
+15-07-2025 07:57:34- INFO| EMA_200_50: Program finished.... | file:<string>|func:<module>|line: 369|thread: MainThread
+15-07-2025 07:57:34- INFO| TeleBot: stopping the notification message worker | file:Notification_Module.py|func:stop_worker|line: 31|thread: MainThread
+15-07-2025 07:59:27- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+15-07-2025 07:59:27- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 131|thread: MainThread
+15-07-2025 07:59:27- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 139|thread: MainThread
+15-07-2025 07:59:27- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-15 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+15-07-2025 07:59:38- INFO| TeleBot: pkl_obj/position.txt sent to Bot. | file:Notification_Module.py|func:send_docs|line: 111|thread: MainThread
+15-07-2025 11:57:39- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+15-07-2025 11:57:39- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 131|thread: MainThread
+15-07-2025 11:57:39- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 139|thread: MainThread
+15-07-2025 11:57:39- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-15 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+15-07-2025 11:59:56- INFO| EMA_200_50: Program finished.... | file:<string>|func:<module>|line: 369|thread: MainThread
+15-07-2025 11:59:56- INFO| TeleBot: stopping the notification message worker | file:Notification_Module.py|func:stop_worker|line: 31|thread: MainThread
+15-07-2025 12:07:17- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+15-07-2025 12:07:17- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 131|thread: MainThread
+15-07-2025 12:07:17- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 139|thread: MainThread
+15-07-2025 12:07:17- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-15 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+15-07-2025 12:09:42- INFO| EMA_200_50: Program finished.... | file:<string>|func:<module>|line: 369|thread: MainThread
+15-07-2025 12:09:42- INFO| TeleBot: stopping the notification message worker | file:Notification_Module.py|func:stop_worker|line: 31|thread: MainThread
+15-07-2025 22:50:20- INFO| TeleBot: credentials imported from text file successfully. | file:Notification_Module.py|func:telegram_credentials|line: 23|thread: MainThread
+15-07-2025 22:50:20- INFO| TeleBot: Starting notification message worker | file:Notification_Module.py|func:<module>|line: 131|thread: MainThread
+15-07-2025 22:50:20- INFO| TeleBot: File ended | file:Notification_Module.py|func:<module>|line: 139|thread: MainThread
+15-07-2025 22:50:20- INFO| Alice Module: Session id retrieved from session.pkl for date: 2025-07-15 | file:Alice_Module.py|func:get_session_id|line: 97|thread: MainThread
+15-07-2025 22:50:43- INFO| EMA_200_50: Source file added | file:<string>|func:get_ema_signals|line: 266|thread: MainThread
+15-07-2025 22:56:18- INFO| EMA_200_50: [
+    {
+        "Analysis_Date": "2025-07-15",
+        "Inst": "MANKIND",
+        "Index": "nifty200",
+        "Signal": "Buy",
+        "BT": 9369.1
+    },
+    {
+        "Analysis_Date": "2025-07-15",
+        "Inst": "GAIL",
+        "Index": "nifty200",
+        "Signal": "Sell",
+        "BT": 13350.29
+    },
+    {
+        "Analysis_Date": "2025-07-15",
+        "Inst": "MANKIND",
+        "Index": "midcap100",
+        "Signal": "Buy",
+        "BT": 9369.1
+    }
+] | file:<string>|func:get_ema_signals|line: 318|thread: MainThread
+15-07-2025 22:56:18- INFO| EMA_200_50: 6 m | file:<string>|func:get_ema_signals|line: 321|thread: MainThread
+15-07-2025 22:57:18- INFO| TeleBot: pkl_obj/position.txt sent to Bot. | file:Notification_Module.py|func:send_docs|line: 111|thread: MainThread
+15-07-2025 22:57:58- INFO| TeleBot: pkl_obj/position.txt sent to Bot. | file:Notification_Module.py|func:send_docs|line: 111|thread: MainThread
