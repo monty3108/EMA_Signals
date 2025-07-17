@@ -1,3 +1,17 @@
+# personal files
+credentials.txt
+/logs
+/pkl_obj
+/app_logs
+NFO.csv
+*.ipynb
+app_logs.txt
+data.txt
+Telegram_data.txt
+INDICES.csv
+NSE.csv
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
