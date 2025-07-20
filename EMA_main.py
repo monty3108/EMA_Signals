@@ -283,6 +283,9 @@ def get_ema_signals():
             if symbol_count < 2:
                 print(f'{symbol_count} {inst['inst'].symbol}\n {df.tail(2)}')
                 time.sleep(3)
+                cont_program = input('Continue (y/n) : ')
+                if not string_to_boolean(cont_program):
+                    break
 
             symbol_count += 1
 
