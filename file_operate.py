@@ -18,6 +18,7 @@ def clear_console():
     else:
         _ = os.system('clear')
 
+
 def file_operate(filepath='positions.csv'):
     """
     Operates on the 'positions.csv' file to modify existing entries,
@@ -35,7 +36,6 @@ def file_operate(filepath='positions.csv'):
             # Using dayfirst=True to parse 'dd mmm yyyy' correctly.
             return pd.read_csv(filepath, index_col='index', parse_dates=['date'], dayfirst=True)
         return pd.DataFrame(columns=['date', 'stock_name', 'qty'])
-
 
     def sort_csv(input_file="positions.csv", output_file="positions.csv"):
         """
@@ -90,8 +90,7 @@ def file_operate(filepath='positions.csv'):
             print(f"Data Validation Error: {e}")
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
-            
-            
+
     def save_data(df):
         """Saves the DataFrame to the CSV file."""
         # Create a copy to avoid modifying the original DataFrame in place
@@ -252,6 +251,40 @@ def file_operate(filepath='positions.csv'):
                     print_android("Invalid input. Please enter 'y' or 'n'.")
         return df # Should not be reached if indices_to_delete is populated, but as a fallback
 
+    def consolidate_positions(df):
+        # Ensure 'date' is in 'DD MMM YYYY' format and then convert to datetime for sorting if needed
+        # The original CSV has 'DD MMM YYYY' format, so we'll parse it as such
+
+        # Create a temporary column for formatted date and quantity for transaction details
+        # Apply lambda function row-wise using axis=1
+        df['date'].dt.strftime('%d %b %Y')
+        df['formatted_date_qty'] = df.apply(lambda row: f"{row['date'].strftime('%d %b %Y')} ({row['qty']}) "
+                                                        f"({row['price']})", axis=1)
+
+        # Calculate total value for weighted average price
+        df['total_value'] = df['qty'] * df['price']
+
+        # Group by stock_name
+        # Use named aggregation for clarity and to get desired column names
+        consolidated_df = df.groupby('stock_name').agg(
+            total_qty=('qty', 'sum'),
+            total_value_sum=('total_value', 'sum'),  # Temporary column for weighted avg calculation
+            transactions_detail=('formatted_date_qty', lambda x: '; '.join(x))
+        ).reset_index()
+
+        # Calculate weighted average price
+        consolidated_df['avg_price'] = round(consolidated_df['total_value_sum'] / consolidated_df['total_qty'],2)
+
+        # Drop the temporary total_value_sum column
+        consolidated_df = consolidated_df.drop(columns=['total_value_sum'])
+
+        # Reorder columns to match the user's initial request order plus the new column
+        # The original headers from the user were date, symbol, qty, price, demat, notes
+        # For consolidated, we will have stock_name, total_qty, avg_price, transactions_detail
+        consolidated_df = consolidated_df[['stock_name', 'total_qty', 'avg_price', 'transactions_detail']]
+        print_android("Consolidated csv saved successfully...")
+        return consolidated_df
+
     # Load data initially
     df = load_data()
 
@@ -263,6 +296,7 @@ def file_operate(filepath='positions.csv'):
         print_android("4. Delete entry") # New option
         print_android("5. Save and Exit") # Shifted
         print_android("6. Exit without saving") # Shifted
+        print_android("7. View consolidated")
         print_android("0. Clear console")  # Shifted
 
         choice = input("Enter your choice (1-6): ")
@@ -409,6 +443,12 @@ def file_operate(filepath='positions.csv'):
         elif choice == '6': # Shifted option
             print_android("Exiting without saving changes.")
             break
+
+        elif choice == '7': # Shifted option
+            consolidated_csv = "consolidated.csv"
+            consolidated_df = consolidate_positions(df)
+            consolidated_df.to_csv(consolidated_csv, index_label='index')
+
 
         elif choice == '0': # Shifted option
             print_android("Clearing Console.")

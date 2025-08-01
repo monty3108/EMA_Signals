@@ -134,9 +134,9 @@ def get_ltp(instrument):
         print(text)
 
 def view_position_status():
-    file_path = 'positions.csv'
+    file_path = 'consolidated.csv'
     df = pd.read_csv(file_path)
-    df['invested'] = df['price'] * df['qty']
+    df['invested'] = df['avg_price'] * df['total_qty']
     df['holding'] = None
     df['ltp'] = None
     df['profit']=None
@@ -148,17 +148,17 @@ def view_position_status():
         row = df.iloc[i]
         inst = config.alice.get_instrument_by_symbol(exchange='NSE', symbol=row['stock_name'])
         ltp = get_ltp(instrument=inst)
-        current_value = (row['qty'] * ltp)
+        current_value = (row['total_qty'] * ltp)
         invested = row['invested']
         profit = round(current_value - invested, 2)
         percent = round((profit/invested) * 100, 2)
         if percent > 5 and invested > 10000:
             remarks = f'Book profit'
-        elif percent < -5:
+        elif percent < -10:
             remarks = f'Buy more'
         else:
             remarks = ''
-        df.loc[i,'holding'] = f'{df.loc[i,'qty']} x {df.loc[i,'price']}'
+        df.loc[i,'holding'] = f'{df.loc[i,'total_qty']} x {df.loc[i,'avg_price']}'
         df.loc[i, 'ltp'] = f'{ltp}'
         df.loc[i, 'profit'] = f'{profit} ({percent}%)'
         df.loc[i, 'remarks'] = remarks
@@ -171,7 +171,8 @@ def view_position_status():
     msg1 = json.dumps(position_summary, indent =4)
     group(msg1) 
     # print(df)
-    df = df.drop(['date', 'demat', 'qty', 'price' ], axis=1)
+    df = df.drop(['transactions_detail', 'avg_price', 'total_qty'], axis=1)
+    df.rename(columns={'stock_name': 'stock'}, inplace=True)
     return df
 
 
