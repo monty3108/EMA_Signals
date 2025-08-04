@@ -1,7 +1,7 @@
-import pandas as pd
-from datetime import datetime
 import os
-import time # Just for demonstration purposes to pause before clearing
+import pandas as pd
+import datetime as dt
+import time
 
 def print_android(str):
     space = 4 * " "
@@ -101,13 +101,15 @@ def file_operate(filepath='positions.csv'):
         # df_to_save = df_to_save.sort_values(by='date', ascending=False) 
         df_to_save.to_csv(filepath, index_label='index')
         sort_csv()
+        cp = pd.read_csv(filepath)
+        consolidate_positions(cp)
         print_android(f"\nChanges saved to {filepath}")
 
     def validate_date(date_str):
         """Validates and converts a date string to 'dd mmm yyyy' format."""
         while True:
             try:
-                dt_obj = datetime.strptime(date_str, '%d %b %Y')
+                dt_obj = dt.datetime.strptime(date_str, '%d %b %Y')
                 return dt_obj # Return datetime object for DataFrame
             except ValueError:
                 date_str = input("Invalid date format. Please use 'dd mmm yyyy' (e.g., 01 Jan 2023): ")
@@ -251,15 +253,19 @@ def file_operate(filepath='positions.csv'):
                     print_android("Invalid input. Please enter 'y' or 'n'.")
         return df # Should not be reached if indices_to_delete is populated, but as a fallback
 
-    def consolidate_positions(df):
+    def consolidate_positions(df1):
+
+        # csv file name to save
+        consolidated_csv = "consolidated.csv"
         # Ensure 'date' is in 'DD MMM YYYY' format and then convert to datetime for sorting if needed
         # The original CSV has 'DD MMM YYYY' format, so we'll parse it as such
-
+        df = df1.copy()
         # Create a temporary column for formatted date and quantity for transaction details
         # Apply lambda function row-wise using axis=1
-        df['date'].dt.strftime('%d %b %Y')
-        df['formatted_date_qty'] = df.apply(lambda row: f"{row['date'].strftime('%d %b %Y')} ({row['qty']}) "
-                                                        f"({row['price']})", axis=1)
+        df['date'] = pd.to_datetime(df['date'], format='%d %b %Y', errors='coerce')
+        df['date'] = df['date'].dt.strftime('%d %b %Y')
+        df['formatted_date_qty'] = df.apply(lambda row: f"{row['date']} {row['qty']} x "
+                                                        f"{row['price']}", axis=1)
 
         # Calculate total value for weighted average price
         df['total_value'] = df['qty'] * df['price']
@@ -276,14 +282,15 @@ def file_operate(filepath='positions.csv'):
         consolidated_df['avg_price'] = round(consolidated_df['total_value_sum'] / consolidated_df['total_qty'],2)
 
         # Drop the temporary total_value_sum column
-        consolidated_df = consolidated_df.drop(columns=['total_value_sum'])
+        # consolidated_df = consolidated_df.drop(columns=['total_value_sum'])
 
         # Reorder columns to match the user's initial request order plus the new column
         # The original headers from the user were date, symbol, qty, price, demat, notes
         # For consolidated, we will have stock_name, total_qty, avg_price, transactions_detail
-        consolidated_df = consolidated_df[['stock_name', 'total_qty', 'avg_price', 'transactions_detail']]
+        consolidated_df = consolidated_df[['stock_name', 'total_qty', 'avg_price', 'total_value_sum', 'transactions_detail']]
+        consolidated_df.to_csv(consolidated_csv, index_label='index')
         print_android("Consolidated csv saved successfully...")
-        return consolidated_df
+        return
 
     # Load data initially
     df = load_data()
@@ -296,7 +303,6 @@ def file_operate(filepath='positions.csv'):
         print_android("4. Delete entry") # New option
         print_android("5. Save and Exit") # Shifted
         print_android("6. Exit without saving") # Shifted
-        print_android("7. View consolidated")
         print_android("0. Clear console")  # Shifted
 
         choice = input("Enter your choice (1-6): ")
@@ -437,17 +443,18 @@ def file_operate(filepath='positions.csv'):
 
         elif choice == '5': # Shifted option
             save_data(df)
-            print_android("Exiting program.")
+
+            clear_console()
+
             break
 
         elif choice == '6': # Shifted option
-            print_android("Exiting without saving changes.")
+            print_android("Exiting without saving changes....")
+            print_android("Exiting program...")
+            time.sleep(2)
             break
 
-        elif choice == '7': # Shifted option
-            consolidated_csv = "consolidated.csv"
-            consolidated_df = consolidate_positions(df)
-            consolidated_df.to_csv(consolidated_csv, index_label='index')
+
 
 
         elif choice == '0': # Shifted option

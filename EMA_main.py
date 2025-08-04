@@ -9,12 +9,14 @@ import pandas as pd
 import pandas_ta as ta
 from Alice_Module import *
 from Gen_Functions import csv_column_to_list, create_dir, write_pkl, read_pkl, df_to_text, clear_console
-import datetime
+import datetime as dt
 import config
 import time
 import file_operate
+from dateutil.relativedelta import relativedelta
 
 from My_Logger import setup_logger, LogLevel
+
 logger = setup_logger(logger_name="EMA_200_50", log_level=LogLevel.INFO, log_to_console=config.print_logger)
 
 # for notification on Telegram
@@ -50,6 +52,31 @@ def format_time(seconds):
     else:
         days = seconds / 86400
         return f"{days:.2f} days"
+
+# Function to display the result
+def display_age(birth_date_str, relative_date_str=None):
+    def calculate_age(birth_date_str, relative_date_str=None):
+        # Convert the birth date string to a datetime object
+        birth_date = dt.datetime.strptime(birth_date_str, "%d %b %Y")
+        # print(birth_date)
+
+        # Get the current date
+        current_date = dt.datetime.today()
+        if relative_date_str:
+            relative_date_str = dt.strptime(relative_date_str, "%Y-%m-%d")
+            delta = relativedelta(relative_date_str, birth_date)
+        else:
+            # Calculate the difference using relativedelta
+            delta = relativedelta(current_date, birth_date)
+
+        # Return the age in years, months, and days
+        return delta.years, delta.months, delta.days
+    age = calculate_age(birth_date_str, relative_date_str)
+    if age:
+        years, months, days = age
+        return f"{years} y, {months} m, {days} d"
+    else:
+        return "Error."
 
 def symbol_list_to_inst_list(symbol_list: list):
     inst_list = []
@@ -171,10 +198,43 @@ def view_position_status():
     msg1 = json.dumps(position_summary, indent =4)
     group(msg1) 
     # print(df)
-    df = df.drop(['transactions_detail', 'avg_price', 'total_qty'], axis=1)
+    df = df.drop(['transactions_detail', 'avg_price', 'total_qty', 'total_value_sum'], axis=1)
     df.rename(columns={'stock_name': 'stock'}, inplace=True)
+    df['index'] = range(1, len(df) + 1)
     return df
 
+
+    #
+    # list = csv_column_to_list(file_path=file_path, symbol_column_name='stock_name')
+    # inst_list = []
+    # for symbol in list:
+    #     inst = config.alice.get_instrument_by_symbol(exchange='NSE', symbol=symbol)
+    #     inst_list.append(inst)
+    # print(inst_list)
+
+def view_stock_transactions():
+    # reading the csv file
+    file_path = 'positions.csv'
+    df = pd.read_csv(file_path)
+
+    # file name for text file
+    text_file_path = 'pkl_obj/stock_transaction.txt'
+    # print(df)
+    # dropping unnecessary columns
+    df = df.drop(['demat'], axis=1)
+    df['holding age'] = df.apply(lambda row: display_age(row['date']), axis=1)
+    # The 'inplace=True' argument modifies the DataFrame directly
+    # 'ascending=True' sorts from A-Z (or low to high)
+    # df.sort_values(by="stock_name", ascending=True, inplace=True)
+    df['date'] = pd.to_datetime(df['date'], format='%d %b %Y', errors='coerce')
+    df.sort_values(by=['stock_name', 'date' ], ascending=[True, True], inplace=True)
+    df.rename(columns={'stock_name': 'stock'}, inplace=True)
+    df['index'] = range(1, len(df) + 1)
+
+    df_to_text(file_path=text_file_path, df=df)
+    files = [text_file_path]
+    send_docs(docs=files)
+    return
 
     #
     # list = csv_column_to_list(file_path=file_path, symbol_column_name='stock_name')
@@ -245,11 +305,131 @@ def get_ema_signals():
         # reading result csv
         bt_result = pd.read_csv('data/index_list/EMA200_50_result.csv')
         write_pkl(obj=bt_result, file_path=path_bt_result)
+
+
         list_of_symbols = []
         for source_file in file_source_list:
             # print(f'Source file for back test: \n {source_file}')
             logger.debug(f'Source file for back test: \n {source_file}')
             list = csv_column_to_list(file_path=source_file['index_csv'], symbol_column_name='SYMBOL')
+            logger.debug(f'list from {source_file}:\n {list}')
+            for i in list:
+                list_of_symbols.append(dict(symbol=i, index=source_file['index_name']))
+        logger.debug(f'Final list {list_of_symbols}\n List length: {len(list_of_symbols)}')
+
+        list_of_inst = symbol_list_to_inst_list(symbol_list=list_of_symbols)  # returns dict keys(symbol, index, inst)
+        # saving list_of_inst to pkl
+        write_pkl(obj=list_of_inst, file_path=path_list_of_inst)
+
+        # reading csv pkl files
+    list_of_inst = read_pkl(file_path=path_list_of_inst)
+    bt_result = read_pkl(file_path=path_bt_result)
+
+    total_symbols = len(list_of_inst)
+    logger.info('Source file added')
+    symbol_count = 1
+    filtered_symbols = []
+    for inst in list_of_inst:
+        try:
+            time_now = time.time()
+            elapsed_time = format_time(time_now - start_time)
+            print(f'   {elapsed_time}: {symbol_count} /{total_symbols}: Checking {inst['symbol']} | {inst['index']} ')
+
+            # if symbol_count > 2:
+            #     logging.info('breaking loop')
+            #     logger.debug(f'\n {df.tail(2)}')
+            #     break
+            df = history_resample(inst=inst['inst'], days_back=3000, resample_period='1d',
+                                  skip_current_day=SKIP_CURRENT_DAY)
+            logger.debug(f'Inst: {inst['inst'].symbol} last two days data returned from history_resample')
+            logger.debug(f'\n {df.tail(2)}')
+            if symbol_count < 2:
+                print(f'{symbol_count} {inst['inst'].symbol}\n {df.tail(2)}')
+                time.sleep(3)
+                cont_program = input('Continue (y/n) : ')
+                if not string_to_boolean(cont_program):
+                    break
+
+            symbol_count += 1
+
+            # Get the Signal for the CURRENT DAY ---
+            # You would fetch all available historical data into `my_latest_data_df`
+            # and then call the function once.
+            # Assume `df` is the most up-to-date data you have
+            my_latest_data_df = df.copy()
+            logger.debug(f'Checking for inst: {inst['symbol']} | {inst['index']}.....')
+            final_signal, final_reason = generate_live_signal(my_latest_data_df)
+            if not final_signal == "Hold":
+                # print("=" * 50)
+                # print("Generating signal for the most recent data point...")
+                print("=" * 50)
+                current_date = my_latest_data_df.index[-1].strftime('%Y-%m-%d')
+                print(f"Inst: {inst['inst'].symbol} | {inst['index']}")
+                print(f"Analysis Date: {current_date}")
+                print(f"SIGNAL: {final_signal}")
+                print(f"REASON: {final_reason}")
+                print("=" * 50)
+                bt = bt_result[bt_result['inst'] == inst['inst'].symbol]
+                dict1 = dict(Analysis_Date=current_date, Inst=inst['inst'].symbol, Index=inst['index'],
+                             Signal=final_signal,
+                             BT=bt['Final_Val'].iloc[0])
+                filtered_symbols.append(dict1)
+                # print(filtered_symbols)
+                # msg = f'Analysis Date: {current_date} | Inst: {inst['inst'].symbol} | SIGNAL: {final_signal}'
+                # group(msg)
+        except Exception as e:
+            logger.exception(e)
+
+    msg = json.dumps(filtered_symbols, indent=4)
+    logger.info(msg)
+    print(msg)
+    group(msg)
+    logger.info(elapsed_time)
+
+
+def get_holding_signals():
+    path_list_of_inst = "pkl_obj/position_list_of_inst.pkl"
+    path_bt_result = "pkl_obj/bt_result.pkl"
+    SKIP_CURRENT_DAY = False  # set true if last day alert to calculate
+    re_write_inst_csv = False
+    print_android('Default boolean values')
+    print_android(f'Skip Current Day: {SKIP_CURRENT_DAY}')
+    print_android(f'Re-write Inst CSV to pkl: {re_write_inst_csv}')
+    modify_confirm = input("Confirm modification for these values? (y/n): ").lower()
+    if modify_confirm == 'y':
+        print_android("Enter new values (leave blank to keep current):")
+
+        new_skip_str = input(f"Skip Current Day:  ({SKIP_CURRENT_DAY}): ")
+        if new_skip_str:
+            SKIP_CURRENT_DAY = string_to_boolean(new_skip_str)
+
+        new_re_write_str = input(f"Re-write Inst CSV to pkl:  ({re_write_inst_csv}): ")
+        if new_re_write_str:
+            re_write_inst_csv = string_to_boolean(new_re_write_str)
+
+    # write inst csv
+    if re_write_inst_csv:
+        # Available index csv...
+        consolidated_csv = dict(index_csv="consolidated.csv", index_name='Holding')
+
+        # nifty50_csv = "data/index_list/nifty50.csv"
+        # nifty200_csv = "data/index_list/MW-NIFTY-200-25-May-2025.csv"
+        # midcap100_csv = "data/index_list/MW-NIFTY-MIDCAP-100-25-May-2025.csv"
+        # smallcap100_csv = "data/index_list/MW-NIFTY-SMALLCAP-100-25-May-2025.csv"
+
+        logger.info('Adding source started')
+        # making list
+        file_source_list = [consolidated_csv]
+
+        # reading result csv
+        bt_result = pd.read_csv('data/index_list/EMA200_50_result.csv')
+        write_pkl(obj=bt_result, file_path=path_bt_result)
+
+        list_of_symbols = []
+        for source_file in file_source_list:
+            # print(f'Source file for back test: \n {source_file}')
+            logger.debug(f'Source file for back test: \n {source_file}')
+            list = csv_column_to_list(file_path=source_file['index_csv'], symbol_column_name='stock_name')
             logger.debug(f'list from {source_file}:\n {list}')
             for i in list:
                 list_of_symbols.append(dict(symbol=i, index=source_file['index_name']))
@@ -330,27 +510,35 @@ def file_operation_menu():
         print_android("1. Operate position file")
         print_android("2. Send holding positions")
         print_android("3. Get EMA signals")
-        print_android("4. Exit")  # New option
-        print_android("0. Clear console")  # Shifted
+        print_android("4. Get holding signals")
+        print_android("10. Clear console")  # Shifted
+        print_android("0. Exit")  # New option
+
 
         choice = input("Enter your choice (1-4): ")
 
         if choice == '1':
+            clear_console()
             file_operate.file_operate('positions.csv')
 
         elif choice == '2':
             send_positions()
             print_android('Positions sent to the telegram.')
-            time.sleep(3)
+            view_stock_transactions()
+            print_android('Stock trans sent to the telegram.....')
+            time.sleep(2)
             clear_console()
 
         elif choice == '3':
             get_ema_signals()
 
-        elif choice == '4':  # New delete functionality
+        elif choice == '4':
+            get_holding_signals()
+
+        elif choice == '0':  # New delete functionality
             break  # Update the DataFrame with the result of deletion
 
-        elif choice == '0':  # Shifted option
+        elif choice == '10':
             print_android("Clearing Console.")
             time.sleep(1)  # Pause for 3 seconds so you can see the text before it clears
             clear_console()
