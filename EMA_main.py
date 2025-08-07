@@ -204,6 +204,52 @@ def view_position_status():
     return df
 
 
+
+def view_pnl():
+    file_path = 'consolidated.csv'
+    df = pd.read_csv(file_path)
+    df['invested'] = df['avg_price'] * df['total_qty']
+    df['holding'] = None
+    df['ltp'] = None
+    df['profit']=None
+    df['percent'] = None
+    df['remarks']= None
+    total_invested = df['invested']. sum() 
+    
+    total_profit = 0
+    for i in range( len(df)):
+        row = df.iloc[i]
+        inst = config.alice.get_instrument_by_symbol(exchange='NSE', symbol=row['stock_name'])
+        ltp = get_ltp(instrument=inst)
+        current_value = (row['total_qty'] * ltp)
+        invested = row['invested']
+        profit = round(current_value - invested, 2)
+        percent = round((profit/invested) * 100, 2)
+        if percent > 5 and invested > 10000:
+            remarks = f'Book profit'
+        elif percent < -10:
+            remarks = f'Buy more'
+        else:
+            remarks = ''
+        df.loc[i,'holding'] = f'{df.loc[i,'total_qty']} x {df.loc[i,'avg_price']}'
+        df.loc[i, 'ltp'] = f'{ltp}'
+        df.loc[i, 'profit'] = f'{profit} ({percent}%)'
+        df.loc[i, 'remarks'] = remarks
+        df.loc[i, 'percent'] = percent
+        total_profit += profit
+        
+    current_value= round(total_invested + total_profit,2)
+    position_summary = dict(Invested=round(total_invested,2), 
+    Current_value=current_value, PnL=round(total_profit,2)) 
+    msg1 = json.dumps(position_summary, indent =4)
+    group(msg1) 
+    # print(df)
+    df = df.drop(['transactions_detail', 'avg_price', 'total_qty', 'total_value_sum'], axis=1)
+    df.rename(columns={'stock_name': 'stock'}, inplace=True)
+    df.sort_values(by=['percent', 'stock_name' ], ascending=[True, True], inplace=True)
+    df['index'] = range(1, len(df) + 1)
+    return df
+    
     #
     # list = csv_column_to_list(file_path=file_path, symbol_column_name='stock_name')
     # inst_list = []
@@ -248,7 +294,11 @@ def send_positions():
     df = view_position_status()
     text_file_path = 'pkl_obj/position.txt'
     df_to_text(file_path=text_file_path, df=df)
-    files = [text_file_path]
+    
+    df1 = view_pnl()
+    pnl_file_path = 'pkl_obj/pnl.txt'
+    df_to_text(file_path=pnl_file_path, df=df1)
+    files = [text_file_path, pnl_file_path]
     send_docs(docs=files)
 
 def print_android(str):
