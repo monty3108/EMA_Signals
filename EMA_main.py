@@ -143,12 +143,15 @@ def get_ltp(instrument):
     fn = 'scrip_info'
     # to get scrip info by providing proper scrip name
     try:
+        print(instrument)
         info = config.alice.get_scrip_info(instrument)
-        # print(f"scrip info: {info}")
-        high = info['High']
-        low = info['Low']
-        open = info['openPrice']
-        prev_close = info['PrvClose']
+        if info['stat'] == 'Not_Ok':
+            print(f"scrip info: {info}")
+            sys.exit('exiting program....')
+        # high = info['High']
+        # low = info['Low']
+        # open = info['openPrice']
+        # prev_close = info['PrvClose']
         ltp = info['LTP']
         # print(f"Open: {open}\n"
         #       f"High: {high}\n"
@@ -175,6 +178,7 @@ def view_position_status():
         row = df.iloc[i]
         inst = config.alice.get_instrument_by_symbol(exchange='NSE', symbol=row['stock_name'])
         ltp = get_ltp(instrument=inst)
+        print(ltp)
         current_value = (row['total_qty'] * ltp)
         invested = row['invested']
         profit = round(current_value - invested, 2)
