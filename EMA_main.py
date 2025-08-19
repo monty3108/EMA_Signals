@@ -143,7 +143,7 @@ def get_ltp(instrument):
     fn = 'scrip_info'
     # to get scrip info by providing proper scrip name
     try:
-        print(instrument)
+        # print(instrument)
         info = config.alice.get_scrip_info(instrument)
         if info['stat'] == 'Not_Ok':
             print(f"scrip info: {info}")
@@ -178,7 +178,7 @@ def view_position_status():
         row = df.iloc[i]
         inst = config.alice.get_instrument_by_symbol(exchange='NSE', symbol=row['stock_name'])
         ltp = get_ltp(instrument=inst)
-        print(ltp)
+        
         current_value = (row['total_qty'] * ltp)
         invested = row['invested']
         profit = round(current_value - invested, 2)
@@ -242,15 +242,11 @@ def view_pnl():
         df.loc[i, 'percent'] = percent
         total_profit += profit
         
-    current_value= round(total_invested + total_profit,2)
-    position_summary = dict(Invested=round(total_invested,2), 
-    Current_value=current_value, PnL=round(total_profit,2)) 
-    msg1 = json.dumps(position_summary, indent =4)
-    group(msg1) 
+    
     # print(df)
     df = df.drop(['transactions_detail', 'avg_price', 'total_qty', 'total_value_sum'], axis=1)
     df.rename(columns={'stock_name': 'stock'}, inplace=True)
-    df.sort_values(by=['percent', 'stock_name' ], ascending=[True, True], inplace=True)
+    df.sort_values(by=['percent', 'stock' ], ascending=[True, True], inplace=True)
     df['index'] = range(1, len(df) + 1)
     return df
     
