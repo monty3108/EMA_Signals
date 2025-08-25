@@ -8,7 +8,7 @@ import sys
 import pandas as pd
 import pandas_ta as ta
 from Alice_Module import *
-from Gen_Functions import csv_column_to_list, create_dir, write_pkl, read_pkl, df_to_text, clear_console
+from Gen_Functions import csv_column_to_list, create_dir, write_pkl, read_pkl, df_to_text, clear_console, remove_files
 import datetime as dt
 import config
 import time
@@ -18,6 +18,7 @@ from dateutil.relativedelta import relativedelta
 from My_Logger import setup_logger, LogLevel
 
 logger = setup_logger(logger_name="EMA_200_50", log_level=LogLevel.INFO, log_to_console=config.print_logger)
+date_str = datetime.datetime.now().strftime("%d_%m_%Y")
 
 # for notification on Telegram
 from Notification_Module import notify, stop_worker, notify1, send_docs
@@ -264,7 +265,7 @@ def view_stock_transactions():
     df = pd.read_csv(file_path)
 
     # file name for text file
-    text_file_path = 'pkl_obj/stock_transaction.txt'
+    text_file_path = f'pkl_obj/All_Trans_{date_str}.txt'
     # print(df)
     # dropping unnecessary columns
     df = df.drop(['demat'], axis=1)
@@ -276,10 +277,14 @@ def view_stock_transactions():
     df.sort_values(by=['stock_name', 'date' ], ascending=[True, True], inplace=True)
     df.rename(columns={'stock_name': 'stock'}, inplace=True)
     df['index'] = range(1, len(df) + 1)
+    df['date'] = df['date'].dt.strftime('%d-%b-%Y')
+    
 
     df_to_text(file_path=text_file_path, df=df)
     files = [text_file_path]
     send_docs(docs=files)
+    print_android('Stock trans sent to the telegram.....')
+    remove_files([text_file_path])
     return
 
     #
@@ -289,17 +294,53 @@ def view_stock_transactions():
     #     inst = config.alice.get_instrument_by_symbol(exchange='NSE', symbol=symbol)
     #     inst_list.append(inst)
     # print(inst_list)
+    
+def view_monthly_investement():
+    """Func to calculate monthly investment from positions.csv
+    and send as a text file """
+    text_file_path = f"Inv_Monthly_{date_str}.txt"
+    # Load the dataframe.
+    df_positions = pd.read_csv('positions.csv')
+    
+    # Calculate the invested amount for each entry.
+    df_positions['invested_amount'] = df_positions['qty'] * df_positions['price']
+    
+    # Convert the 'date' column to datetime objects.
+    df_positions['date'] = pd.to_datetime(df_positions['date'], format='%d %b %Y')
+    
+    # Create a new column for the month of investment.
+    df_positions['investment_month'] = df_positions['date'].dt.to_period('M')
+    
+    # Group the entries by month and calculate the total monthly investment.
+    monthly_investment = df_positions.groupby('investment_month')['invested_amount'].sum().reset_index()
+    
+    # Rename the columns for clarity.
+    monthly_investment.columns = ['Month', 'Monthly Investment']
+    
+    df_to_text(file_path=text_file_path, df=monthly_investment)
+    files = [text_file_path]
+    send_docs(docs=files)
+    print_android('Investment monthly sent to the telegram.....')
+    
+    remove_files([text_file_path])
+    
+    # Save the final data to a new CSV file.
+    # monthly_investment.to_csv('monthly_investment.csv', index=False)
+    
+    
 
 def send_positions():
     df = view_position_status()
-    text_file_path = 'pkl_obj/position.txt'
+    text_file_path = f'pkl_obj/Holding_{date_str}.txt'
     df_to_text(file_path=text_file_path, df=df)
     
     df1 = view_pnl()
-    pnl_file_path = 'pkl_obj/pnl.txt'
+    pnl_file_path = f'pkl_obj/PnL_{date_str}.txt'
     df_to_text(file_path=pnl_file_path, df=df1)
+    
     files = [text_file_path, pnl_file_path]
     send_docs(docs=files)
+    remove_files(files)
 
 def print_android(str):
     space = 4 * " "
@@ -574,9 +615,12 @@ def file_operation_menu():
         elif choice == '2':
             send_positions()
             print_android('Positions sent to the telegram.')
+            
             view_stock_transactions()
-            print_android('Stock trans sent to the telegram.....')
-            time.sleep(2)
+            
+            view_monthly_investement()
+            
+            time.sleep(8)
             clear_console()
 
         elif choice == '3':

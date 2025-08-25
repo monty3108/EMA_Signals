@@ -287,3 +287,33 @@ def clear_console():
     # For macOS and Linux (posix refers to POSIX compliant systems)
     else:
         _ = os.system('clear')
+        
+import os
+from typing import List
+
+def remove_files(file_paths: List[str]):
+    """
+    Removes a list of files from the file system.
+
+    This function iterates through a list of file paths, attempting to delete
+    each file. It provides feedback on the status of each removal attempt.
+
+    Args:
+        file_paths (List[str]): A list of strings, where each string is the
+                                full path to a file to be removed.
+    """
+    if not isinstance(file_paths, list):
+        print("Error: The input must be a list of file paths.")
+        return
+
+    for file_path in file_paths:
+        try:
+            os.remove(file_path)
+            print(f"File '{file_path}' has been successfully removed.")
+        except FileNotFoundError:
+            print(f"Error: The file '{file_path}' was not found.")
+        except PermissionError:
+            print(f"Error: You do not have permission to delete the file '{file_path}'.")
+        except Exception as e:
+            print(f"An unexpected error occurred while deleting '{file_path}': {e}")
+            
