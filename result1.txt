@@ -1,1 +1,0 @@
-{'inst': 'TATAPOWER', 'index': 'manual', 'Final_Val': 63187.4}

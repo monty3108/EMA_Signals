@@ -14,6 +14,7 @@ import config
 import time
 import file_operate
 from dateutil.relativedelta import relativedelta
+import dividend_record
 
 from My_Logger import setup_logger, LogLevel
 
@@ -295,7 +296,7 @@ def view_stock_transactions():
     #     inst_list.append(inst)
     # print(inst_list)
     
-def view_monthly_investement():
+def view_monthly_investment():
     """Func to calculate monthly investment from positions.csv
     and send as a text file """
     text_file_path = f"Inv_Monthly_{date_str}.txt"
@@ -326,8 +327,6 @@ def view_monthly_investement():
     
     # Save the final data to a new CSV file.
     # monthly_investment.to_csv('monthly_investment.csv', index=False)
-    
-    
 
 def send_positions():
     df = view_position_status()
@@ -602,6 +601,7 @@ def file_operation_menu():
         print_android("2. Send holding positions")
         print_android("3. Get EMA signals")
         print_android("4. Get holding signals")
+        print_android("5. Operate Dividend file")
         print_android("10. Clear console")  # Shifted
         print_android("0. Exit")  # New option
 
@@ -618,7 +618,7 @@ def file_operation_menu():
             
             view_stock_transactions()
             
-            view_monthly_investement()
+            view_monthly_investment()
             
             time.sleep(8)
             clear_console()
@@ -628,6 +628,9 @@ def file_operation_menu():
 
         elif choice == '4':
             get_holding_signals()
+
+        elif choice == '5':
+            dividend_record.main_menu()
 
         elif choice == '0':  # New delete functionality
             break  # Update the DataFrame with the result of deletion
