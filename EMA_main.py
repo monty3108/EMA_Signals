@@ -8,7 +8,7 @@ import sys
 import pandas as pd
 import pandas_ta as ta
 from Alice_Module import *
-from Gen_Functions import csv_column_to_list, create_dir, write_pkl, read_pkl, df_to_text, clear_console, remove_files
+from Gen_Functions import get_time, csv_column_to_list, create_dir, write_pkl, read_pkl, df_to_text, clear_console, remove_files
 import datetime as dt
 import config
 import time
@@ -329,12 +329,18 @@ def view_monthly_investment():
     # monthly_investment.to_csv('monthly_investment.csv', index=False)
 
 def send_positions():
+    # Step 1: Get the current time
+    current_time = get_time() # datetime.now()
+    
+    # Step 2: Format the time into HH:MM string
+    ts = current_time.strftime("%H_%M")
+    
     df = view_position_status()
-    text_file_path = f'pkl_obj/Holding_{date_str}.txt'
+    text_file_path = f'pkl_obj/Holding_{ts}.txt'
     df_to_text(file_path=text_file_path, df=df)
     
     df1 = view_pnl()
-    pnl_file_path = f'pkl_obj/PnL_{date_str}.txt'
+    pnl_file_path = f'pkl_obj/PnL_{ts}.txt'
     df_to_text(file_path=pnl_file_path, df=df1)
     
     files = [text_file_path, pnl_file_path]
@@ -620,8 +626,8 @@ def file_operation_menu():
             
             view_monthly_investment()
             
-            time.sleep(8)
-            clear_console()
+            #time.sleep(8)
+#            clear_console()
 
         elif choice == '3':
             get_ema_signals()
@@ -643,7 +649,10 @@ def file_operation_menu():
             print_android("Invalid choice. Please enter a number between 1 and 4.")
 
 if __name__ == '__main__':
-
+    
+    
+    
+    # sys.exit()
     # generate session
     if config.alice is None:
         logger.debug("alice object is None. Calling get_session_id()")
