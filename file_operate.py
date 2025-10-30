@@ -3,6 +3,11 @@ import pandas as pd
 import datetime as dt
 import time
 
+import config
+
+date_format = config.date_format
+filepath_positions = config.filepath_positions
+
 def print_android(str):
     space = 4 * " "
     print(f'{space}{str}')
@@ -18,6 +23,120 @@ def clear_console():
     else:
         _ = os.system('clear')
 
+# def consolidate_positions(df1):
+#
+#         # csv file name to save
+#         consolidated_csv = "consolidated.csv"
+#         # Ensure 'date' is in 'DD MMM YYYY' format and then convert to datetime for sorting if needed
+#         # The original CSV has 'DD MMM YYYY' format, so we'll parse it as such
+#         df = df1.copy()
+#         # Create a temporary column for formatted date and quantity for transaction details
+#         # Apply lambda function row-wise using axis=1
+#         # df['date'] = pd.to_datetime(df['date'], format=date_format, errors='coerce')
+#         # df['date'] = df['date'].dt.strftime('%d %b %Y')
+#         df['formatted_date_qty'] = df.apply(lambda row: f"{row['date']} {row['qty']} x "
+#                                                         f"{row['price']}", axis=1)
+#
+#         # Calculate total value for weighted average price
+#         df['total_value'] = df['qty'] * df['price']
+#
+#         # Group by stock_name
+#         # Use named aggregation for clarity and to get desired column names
+#         consolidated_df = df.groupby('stock_name').agg(
+#             total_qty=('qty', 'sum'),
+#             total_value_sum=('total_value', 'sum'),  # Temporary column for weighted avg calculation
+#             transactions_detail=('formatted_date_qty', lambda x: '; '.join(x))
+#         ).reset_index()
+#
+#         # Calculate weighted average price
+#         consolidated_df['avg_price'] = round(consolidated_df['total_value_sum'] / consolidated_df['total_qty'],2)
+#
+#         # Drop the temporary total_value_sum column
+#         # consolidated_df = consolidated_df.drop(columns=['total_value_sum'])
+#
+#         # Reorder columns to match the user's initial request order plus the new column
+#         # The original headers from the user were date, symbol, qty, price, demat, notes
+#         # For consolidated, we will have stock_name, total_qty, avg_price, transactions_detail
+#         consolidated_df = consolidated_df[['stock_name', 'total_qty', 'avg_price', 'total_value_sum', 'transactions_detail']]
+#         consolidated_df.to_csv(consolidated_csv, index_label='index')
+#         print_android("Consolidated csv saved successfully...")
+#         return
+
+
+# # Sort and save file positions.csv
+# def sort_csv(input_file: str= filepath_positions, output_file: str= filepath_positions):
+#         """
+#         Sorts a CSV file by the 'date' column (dd mmm yyyy format) and re-indexes the 'index' column.
+#
+#         Args:
+#             input_file (str): The path to the input CSV file.
+#             output_file (str): The path to save the modified CSV file.
+#         """
+#         try:
+#             # Load the CSV file into a pandas DataFrame
+#             df = pd.read_csv(input_file)
+#
+#             # Validate if 'date' and 'index' columns exist
+#             if 'date' not in df.columns:
+#                 raise ValueError("The 'date' column is not found in the CSV file.")
+#             if 'index' not in df.columns:
+#                 raise ValueError("The 'index' column is not found in the CSV file.")
+#
+#             # Convert 'date' column to datetime objects using the specified format
+#             # '%d %b %Y' corresponds to 'DD Mon YYYY' (e.g., '25 Jul 2025')
+#             # errors='coerce' will convert any unparseable dates to NaT (Not a Time)
+#             df['date'] = pd.to_datetime(df['date'], format=date_format, errors='coerce')
+#
+#             # # Drop rows where date conversion failed (if any).
+#             # # This handles cases where the date format might not be consistent.
+#             # initial_rows = len(df)
+#             # df.dropna(subset=['date'], inplace=True)
+#             # if len(df) < initial_rows:
+#             #     print(f"Warning: {initial_rows - len(df)} rows were dropped due to unparseable dates.")
+#             #     time.sleep(3)
+#
+#             # Sort the DataFrame by the 'date' column
+#             df_sorted = df.sort_values(by='date', ascending=True)
+#
+#             # Reset the 'index' column to incremental numbers
+#             # We use range(1, len(df_sorted) + 1) to start the index from 1
+#             df_sorted['index'] = range(1, len(df_sorted) + 1)
+#
+#             # Convert the 'date' column back to the original 'dd mmm yyyy' string format for saving
+#             df_sorted['date'] = df_sorted['date'].dt.strftime(date_format)
+#
+#             # Save the updated DataFrame to a new CSV file
+#             df_sorted.to_csv(output_file, index=False)
+#
+#             print(f"File '{input_file}' has been sorted by actual date and indexed incrementally.")
+#             print(f"The modified data is saved to '{output_file}'.")
+#
+#         except FileNotFoundError:
+#             print(f"Error: The file '{input_file}' was not found.")
+#         except ValueError as e:
+#             print(f"Data Validation Error: {e}")
+#         except Exception as e:
+#             print(f"An unexpected error occurred: {e}")
+#
+# def save_data(df):
+#     """Saves the DataFrame to the CSV file."""
+#     # Create a copy to avoid modifying the original DataFrame in place
+#     df_to_save = df.copy()
+#     # Ensure 'date' column is in 'dd mmm yyyy' format before saving
+#     # df_to_save['date'] = df_to_save['date'].dt.strftime(date_format)
+#
+#     # df_to_save = df_to_save.sort_values(by='date', ascending=False)
+#     df_to_save.to_csv(filepath_positions, index_label='index')
+#     sort_csv()
+#     cp = pd.read_csv(filepath_positions)
+#     consolidate_positions(cp)
+#     print_android(f"\nChanges saved to {filepath_positions}")
+#
+#
+#
+
+
+
 
 def file_operate(filepath='positions.csv'):
     """
@@ -27,15 +146,84 @@ def file_operate(filepath='positions.csv'):
     Args:
         filepath (str): The path to the CSV file.
     """
+    import pandas as pd
+    import numpy as np
+
+
+    # Initial check 1
+    def check_date_format(file_path: str, date_format: str):
+        """
+                Checks the 'date' column against the specified format.
+                Identifies and reports rows with incorrect date formats,
+                explaining where interactive input would be taken in a local environment.
+                """
+        print(f"--- Checking dates in '{file_path}' against format '{date_format}' ---")
+        # Load the CSV. Read the index column correctly.
+        try:
+            df = pd.read_csv(file_path, index_col='index')
+        except FileNotFoundError:
+            print(f"Error: File '{file_path}' not found.")
+            return
+
+        # Attempt to parse dates, coercing errors to NaT
+        df['validated_date'] = pd.to_datetime(df['date'], format=config.date_format, errors='coerce')
+
+        # Identify rows where conversion failed (i.e., NaT)
+        incorrect_dates = df[df['validated_date'].isnull()]
+        if not incorrect_dates.empty:
+            print("\n--- ❌ INCORRECT DATES FOUND ---")
+            # Iterate over the rows with bad dates to 'prompt' the user
+            for index, row in incorrect_dates.iterrows():
+                print(incorrect_dates)
+                original_date = row['date']
+                i = index
+                date_input = input(f"Enter correct date for index {i} '{original_date}' (Format: {date_format}): ")
+                new_date = validate_date(date_input)
+                df.loc[index, 'date'] = new_date
+            # Clean up the temporary validation column
+            df.drop(columns=['validated_date'], inplace=True, errors='ignore')
+            # save the df in original location
+            save_data(df)
+        else:
+            print("\n--- ✅ ALL DATES PASSED CHECK ---")
+            print(f"All {len(df)} rows in the 'date' column match the format '{date_format}'.")
+
+    # Initial check 2
+    def check_null_values(file_path: str):
+
+        try:
+            df = pd.read_csv(file_path, index_col='index')
+        except FileNotFoundError:
+            print(f"Error: File '{file_path}' not found.")
+            return
+
+        rows_with_null = df.isnull().any(axis=1)
+        empty_rows_df = df[rows_with_null]
+
+        print("\n--- Missing Data Check ---")
+        if empty_rows_df.empty:
+            print("✅ No empty cells (NaN/Null/NaT) found in the DataFrame.")
+        else:
+            print("⚠️ The following rows contain one or more empty cells (NaN/Null/NaT):")
+            print(empty_rows_df)
+
+            # --- Instruction to the User ---
+            print("\n📣 ACTION REQUIRED: Please update the missing values in your original data.")
+
+            # Save empty rows for manual update
+            empty_rows_df.to_csv('empty_rows_for_update.csv', index=False)
+            print(f"These rows have been saved to 'empty_rows_for_update.csv' for review.")
+            time.sleep(5)
 
     def load_data():
         """Loads data from the CSV file into a DataFrame."""
-        if os.path.exists(filepath):
+        if os.path.exists(config.filepath_positions):
             # Explicitly define converters for 'date' column to handle potential mixed types
             # and ensure proper parsing even if a column looks like numbers.
             # Using dayfirst=True to parse 'dd mmm yyyy' correctly.
-            return pd.read_csv(filepath, index_col='index', parse_dates=['date'], dayfirst=True)
-        return pd.DataFrame(columns=['date', 'stock_name', 'qty'])
+            return pd.read_csv(filepath, index_col='index')
+        else:
+            return print("file not found")
 
     def sort_csv(input_file="positions.csv", output_file="positions.csv"):
         """
@@ -62,12 +250,11 @@ def file_operate(filepath='positions.csv'):
     
             # Drop rows where date conversion failed (if any).
             # This handles cases where the date format might not be consistent.
-            initial_rows = len(df)
-            df.dropna(subset=['date'], inplace=True)
-            if len(df) < initial_rows:
-                print(f"Warning: {initial_rows - len(df)} rows were dropped due to unparseable dates.")
-    
-    
+            # initial_rows = len(df)
+            # df.dropna(subset=['date'], inplace=True)
+            # if len(df) < initial_rows:
+            #     print(f"Warning: {initial_rows - len(df)} rows were dropped due to unparseable dates.")
+
             # Sort the DataFrame by the 'date' column
             df_sorted = df.sort_values(by='date', ascending=True)
     
@@ -92,11 +279,11 @@ def file_operate(filepath='positions.csv'):
             print(f"An unexpected error occurred: {e}")
 
     def save_data(df):
-        """Saves the DataFrame to the CSV file."""
+        """Sorting and saving the DataFrame to the CSV file."""
         # Create a copy to avoid modifying the original DataFrame in place
         df_to_save = df.copy()
         # Ensure 'date' column is in 'dd mmm yyyy' format before saving
-        df_to_save['date'] = df_to_save['date'].dt.strftime('%d %b %Y')
+        # df_to_save['date'] = df_to_save['date'].dt.strftime('%d %b %Y')
         
         # df_to_save = df_to_save.sort_values(by='date', ascending=False) 
         df_to_save.to_csv(filepath, index_label='index')
@@ -107,10 +294,14 @@ def file_operate(filepath='positions.csv'):
 
     def validate_date(date_str):
         """Validates and converts a date string to 'dd mmm yyyy' format."""
+        global date_format
         while True:
             try:
                 dt_obj = dt.datetime.strptime(date_str, '%d %b %Y')
-                return dt_obj # Return datetime object for DataFrame
+                # print(f'dt obj: {dt_obj} type: {type(dt_obj)}')
+                formatted_date_string = dt_obj.strftime(config.date_format)
+                # print(formatted_date_string)
+                return formatted_date_string # Return datetime object for DataFrame
             except ValueError:
                 date_str = input("Invalid date format. Please use 'dd mmm yyyy' (e.g., 01 Jan 2023): ")
 
@@ -151,7 +342,7 @@ def file_operate(filepath='positions.csv'):
         # Create a copy for display purposes to avoid modifying the original DataFrame
         df_display = df.copy()
         # Format the 'date' column for consistent display
-        df_display['date'] = df_display['date'].dt.strftime('%d %b %Y')
+        # df_display['date'] = df_display['date'].dt.strftime('%d %b %Y')
 
         total_rows = len(df_display)
         start_index = 0
@@ -235,8 +426,8 @@ def file_operate(filepath='positions.csv'):
             # Display entries to be deleted for confirmation
             print_android("\n--- Entry(ies) to be Deleted ---")
             entries_to_delete_display = df.loc[indices_to_delete].copy()
-            entries_to_delete_display['date'] = entries_to_delete_display['date'].dt.strftime('%d %b %Y')
-            print_android(entries_to_delete_display.to_string())
+            # entries_to_delete_display['date'] = entries_to_delete_display['date'].dt.strftime('%d %b %Y')
+            print_android(entries_to_delete_display)
 
             while True:
                 confirm = input("Are you sure you want to delete this/these entry(ies)? (y/n): ").lower()
@@ -291,6 +482,16 @@ def file_operate(filepath='positions.csv'):
         consolidated_df.to_csv(consolidated_csv, index_label='index')
         print_android("Consolidated csv saved successfully...")
         return
+
+    def initial_check(file_name=filepath_positions, date_format=config.date_format):
+        # Step 1: Date format check
+        check_date_format(file_name, date_format)
+        check_null_values(file_name)
+
+
+
+    # checking data initially
+    initial_check()
 
     # Load data initially
     df = load_data()
@@ -360,11 +561,12 @@ def file_operate(filepath='positions.csv'):
                 current_row = df.loc[selected_row_index]
                 print_android(f"\n--- Current Row (Index: {selected_row_index}) ---")
                 # Display current date in the desired string format
-                print_android(f"Date: {current_row['date'].strftime('%d %b %Y')}")
+                print_android(f"Date: {current_row['date']}")
                 print_android(f"Stock Name: {current_row['stock_name']}")
                 print_android(f"Quantity: {current_row['qty']}")
                 print_android(f"Price: {current_row['price']}")
                 print_android(f"Demat: {current_row['demat']}")
+                print_android(f"Tran type: {current_row['tran_type']}")
 
                 while True:
                     modify_confirm = input("Confirm modification for this entry? (y/n): ").lower()
@@ -372,7 +574,7 @@ def file_operate(filepath='positions.csv'):
                         print_android("\nEnter new values (leave blank to keep current):")
                         
                         # Display current date in input prompt in 'dd mmm yyyy' format
-                        new_date_str = input(f"New Date ({current_row['date'].strftime('%d %b %Y')}): ")
+                        new_date_str = input(f"New Date ({current_row['date']}): ")
                         if new_date_str:
                             df.loc[selected_row_index, 'date'] = validate_date(new_date_str)
                         
@@ -391,7 +593,11 @@ def file_operate(filepath='positions.csv'):
                         demat_input = input(f"New demat ({current_row['demat']}): ")
                         if demat_input:
                             df.loc[selected_row_index, 'demat'] = validate_stock_name(demat_input) # for upper case
-                        
+
+                        tran_input = input(f"New tran_type ({current_row['tran_type']}): ")
+                        if tran_input:
+                            df.loc[selected_row_index, 'tran_type'] = validate_stock_name(tran_input)  # for upper case
+
                         print_android("Entry updated.")
                         break
                     elif modify_confirm == 'n':
@@ -418,6 +624,9 @@ def file_operate(filepath='positions.csv'):
             demat_input = input(f"Enter demat: ")
             new_demat = validate_stock_name(demat_input)  # for upper case
 
+            tran_type = input(f"Enter tran_type (sell or buy): ")
+            buy_or_sell = validate_stock_name(tran_type)  # for upper case
+
             # Determine the next index
             if df.empty:
                 next_index = 0
@@ -429,7 +638,8 @@ def file_operate(filepath='positions.csv'):
                 'stock_name': new_stock_name, 
                 'qty': new_qty,
                 'price': new_price,
-                'demat': new_demat
+                'demat': new_demat,
+                'tran_type': buy_or_sell
             }], index=[next_index])
             
             df = pd.concat([df, new_entry])
@@ -479,5 +689,6 @@ if __name__ == "__main__":
         initial_df['date'] = pd.to_datetime(initial_df['date'], format='%d %b %Y') 
         initial_df.to_csv('positions.csv', index_label='index', date_format='%d %b %Y')
         print_android("Created a dummy 'positions.csv' with more than 10 entries for demonstration.")
-    
+
+
     file_operate('positions.csv')

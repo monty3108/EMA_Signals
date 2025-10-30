@@ -29,6 +29,8 @@ create_dir(config.dir_name)
 strategy_name = 'EMA200_50'
 start_time = time.time() # for calculation of elapsed time
 
+# Variable for alice operations
+ALICE = None
 # for telegram notifications
 def me(msg):
     """For sending personal notification """
@@ -208,8 +210,6 @@ def view_position_status():
     df.rename(columns={'stock_name': 'stock'}, inplace=True)
     df['index'] = range(1, len(df) + 1)
     return df
-
-
 
 def view_pnl():
     file_path = 'consolidated.csv'
@@ -608,6 +608,7 @@ def file_operation_menu():
         print_android("3. Get EMA signals")
         print_android("4. Get holding signals")
         print_android("5. Operate Dividend file")
+        print_android("6. Generate Session for live quotes")
         print_android("10. Clear console")  # Shifted
         print_android("0. Exit")  # New option
 
@@ -638,6 +639,9 @@ def file_operation_menu():
         elif choice == '5':
             dividend_record.main_menu()
 
+        elif choice == '6':
+            generate_session()
+
         elif choice == '0':  # New delete functionality
             break  # Update the DataFrame with the result of deletion
 
@@ -648,22 +652,20 @@ def file_operation_menu():
         else:
             print_android("Invalid choice. Please enter a number between 1 and 4.")
 
-if __name__ == '__main__':
-    
-    
-    
-    # sys.exit()
-    # generate session
+def generate_session():
+    global ALICE
     if config.alice is None:
         logger.debug("alice object is None. Calling get_session_id()")
         get_session_id()
         # session_id_generate()
         logger.debug(f'alice obj after calling:{config.alice} ')
     # Setting alice value from config file alice obj
-    alice = config.alice
+    ALICE = config.alice
 
+
+if __name__ == '__main__':
+    # sys.exit()
     file_operation_menu()
-
     logger.info("Program finished....")
     stop_worker()
 

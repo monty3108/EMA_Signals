@@ -57,6 +57,9 @@ SESSION_START_TIME = datetime.datetime.strptime("09:14:59", "%H:%M:%S").time()
 SESSION_END_TIME = datetime.datetime.strptime("15:30:00", "%H:%M:%S").time()
 
 # Program related changeable variables
+date_format='%d %b %Y'
+filepath_positions ='positions.csv'
+
 
 # set True for Order Feed
 order_Feed_required = True
