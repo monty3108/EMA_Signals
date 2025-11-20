@@ -168,34 +168,44 @@ def get_ltp(instrument):
         print(text)
 
 def view_position_status():
-    file_path = 'consolidated.csv'
+    # file_path = 'consolidated.csv'
+    file_path = 'holding_report.csv'
     df = pd.read_csv(file_path)
-    df['invested'] = df['avg_price'] * df['total_qty']
+
+    df['qty_holding'] = pd.to_numeric(df['qty_holding'])
+    df['avg_buy_price'] = pd.to_numeric(df['avg_buy_price'])
+
+    df['invested'] = df['qty_holding'] * df['avg_buy_price']
     df['holding'] = None
     df['ltp'] = None
     df['profit']=None
+    df['percent']= None
     df['remarks']= None
     total_invested = df['invested']. sum() 
-    
+
+    # print(df)
     total_profit = 0
     for i in range( len(df)):
         row = df.iloc[i]
         inst = config.alice.get_instrument_by_symbol(exchange='NSE', symbol=row['stock_name'])
         ltp = get_ltp(instrument=inst)
+
+        # sys.exit()
         
-        current_value = (row['total_qty'] * ltp)
+        current_value = (row['qty_holding'] * ltp)
         invested = row['invested']
         profit = round(current_value - invested, 2)
         percent = round((profit/invested) * 100, 2)
-        if percent > 5 and invested > 10000:
+        if percent > 10:
             remarks = f'Book profit'
         elif percent < -10:
             remarks = f'Buy more'
         else:
             remarks = ''
-        df.loc[i,'holding'] = f'{df.loc[i,'total_qty']} x {df.loc[i,'avg_price']}'
+        df.loc[i,'holding'] = f'{df.loc[i,'qty_holding']} x {df.loc[i,'avg_buy_price']}'
         df.loc[i, 'ltp'] = f'{ltp}'
         df.loc[i, 'profit'] = f'{profit} ({percent}%)'
+        df.loc[i, 'percent'] = percent
         df.loc[i, 'remarks'] = remarks
         
         total_profit += profit
@@ -206,86 +216,97 @@ def view_position_status():
     msg1 = json.dumps(position_summary, indent =4)
     group(msg1) 
     # print(df)
-    df = df.drop(['transactions_detail', 'avg_price', 'total_qty', 'total_value_sum'], axis=1)
-    df.rename(columns={'stock_name': 'stock'}, inplace=True)
-    df['index'] = range(1, len(df) + 1)
-    return df
 
-def view_pnl():
-    file_path = 'consolidated.csv'
-    df = pd.read_csv(file_path)
-    df['invested'] = df['avg_price'] * df['total_qty']
-    df['holding'] = None
-    df['ltp'] = None
-    df['profit']=None
-    df['percent'] = None
-    df['remarks']= None
-    total_invested = df['invested']. sum() 
-    
-    total_profit = 0
-    for i in range( len(df)):
-        row = df.iloc[i]
-        inst = config.alice.get_instrument_by_symbol(exchange='NSE', symbol=row['stock_name'])
-        ltp = get_ltp(instrument=inst)
-        current_value = (row['total_qty'] * ltp)
-        invested = row['invested']
-        profit = round(current_value - invested, 2)
-        percent = round((profit/invested) * 100, 2)
-        if percent > 5 and invested > 10000:
-            remarks = f'Book profit'
-        elif percent < -10:
-            remarks = f'Buy more'
-        else:
-            remarks = ''
-        df.loc[i,'holding'] = f'{df.loc[i,'total_qty']} x {df.loc[i,'avg_price']}'
-        df.loc[i, 'ltp'] = f'{ltp}'
-        df.loc[i, 'profit'] = f'{profit} ({percent}%)'
-        df.loc[i, 'remarks'] = remarks
-        df.loc[i, 'percent'] = percent
-        total_profit += profit
-        
-    
-    # print(df)
-    df = df.drop(['transactions_detail', 'avg_price', 'total_qty', 'total_value_sum'], axis=1)
     df.rename(columns={'stock_name': 'stock'}, inplace=True)
-    df.sort_values(by=['percent', 'stock' ], ascending=[True, True], inplace=True)
-    df['index'] = range(1, len(df) + 1)
-    return df
-    
-    #
-    # list = csv_column_to_list(file_path=file_path, symbol_column_name='stock_name')
-    # inst_list = []
-    # for symbol in list:
-    #     inst = config.alice.get_instrument_by_symbol(exchange='NSE', symbol=symbol)
-    #     inst_list.append(inst)
-    # print(inst_list)
+    # copy the df to df_pnl
+    df_pnl = df.copy()
+
+    df = df.drop(['qty_holding','avg_buy_price', 'percent'], axis=1)
+    # df.rename(columns={'stock_name': 'stock'}, inplace=True)
+    df['index'] = range(1, len(df) + 1) # Final df to send
+
+    # format df_pnl for sending
+    df_pnl.sort_values(by=['percent', 'stock'],
+                       ascending=[True, True], inplace=True)
+    df_pnl['index'] = range(1, len(df_pnl) + 1)
+    # pd.set_option('display.max_colwidth', None)
+
+    # sys.exit()
+    new_order = ['index', 'stock', 'profit', 'remarks', 'holding', 'ltp', 'invested']
+    df_pnl_reordered = df_pnl[new_order]
+
+    # Step 1: Get the current time
+    current_time = get_time()  # datetime.now()
+
+    # Step 2: Format the time into HH:MM string
+    ts = current_time.strftime("%H_%M")
+
+    holding_file_path = f'pkl_obj/Holding_{ts}.txt'
+    df_to_text(file_path=holding_file_path, df=df)
+
+    pnl_file_path = f'pkl_obj/PnL_{ts}.txt'
+    df_to_text(file_path=pnl_file_path, df=df_pnl_reordered)
+
+    files = [holding_file_path, pnl_file_path]
+    send_docs(docs=files)
+    remove_files(files)
+    time.sleep(2)
+    return
 
 def view_stock_transactions():
     # reading the csv file
     file_path = 'positions.csv'
     df = pd.read_csv(file_path)
 
-    # file name for text file
-    text_file_path = f'pkl_obj/All_Trans_{date_str}.txt'
-    # print(df)
+    df_positions = df.copy()
+
+    df['ltp'] = None
+
+    # getting the ltp
+    for i in range(len(df)):
+        row = df.iloc[i]
+        # print(row)
+        inst = config.alice.get_instrument_by_symbol(exchange='NSE', symbol=row['stock_name'])
+        # print(inst)
+        ltp = get_ltp(instrument=inst)
+        df.loc[i, 'ltp'] = f'{ltp}'
+        # print(ltp)
+
     # dropping unnecessary columns
-    df = df.drop(['demat'], axis=1)
+    # df = df.drop(['demat'], axis=1)
     df['holding age'] = df.apply(lambda row: display_age(row['date']), axis=1)
     # The 'inplace=True' argument modifies the DataFrame directly
     # 'ascending=True' sorts from A-Z (or low to high)
     # df.sort_values(by="stock_name", ascending=True, inplace=True)
     df['date'] = pd.to_datetime(df['date'], format='%d %b %Y', errors='coerce')
     df.sort_values(by=['stock_name', 'date' ], ascending=[True, True], inplace=True)
-    df.rename(columns={'stock_name': 'stock'}, inplace=True)
-    df['index'] = range(1, len(df) + 1)
+    df.rename(columns={'stock_name': 'stock', 'tran_type': 'type'}, inplace=True)
     df['date'] = df['date'].dt.strftime('%d-%b-%Y')
-    
+    df['index'] = range(1, len(df) + 1)
 
-    df_to_text(file_path=text_file_path, df=df)
-    files = [text_file_path]
+
+    new_order = ['index', 'date', 'stock', 'qty', 'price', 'ltp', 'type', 'holding age', 'demat']
+    df = df[new_order]
+
+    # Step 1: Get the current time
+    current_time = get_time()  # datetime.now()
+
+    # Step 2: Format the time into HH:MM string
+    ts = current_time.strftime("%H_%M")
+
+    # position file
+    position_file_path = f'pkl_obj/Positions_{ts}.txt'
+    df_to_text(file_path=position_file_path, df=df_positions)
+
+    # transaction file
+    transaction_file_path = f'pkl_obj/All_Trans_{ts}.txt'
+    df_to_text(file_path=transaction_file_path, df=df)
+
+    files = [transaction_file_path, position_file_path]
     send_docs(docs=files)
+    time.sleep(2)
     print_android('Stock trans sent to the telegram.....')
-    remove_files([text_file_path])
+    remove_files(files)
     return
 
     #
@@ -327,25 +348,6 @@ def view_monthly_investment():
     
     # Save the final data to a new CSV file.
     # monthly_investment.to_csv('monthly_investment.csv', index=False)
-
-def send_positions():
-    # Step 1: Get the current time
-    current_time = get_time() # datetime.now()
-    
-    # Step 2: Format the time into HH:MM string
-    ts = current_time.strftime("%H_%M")
-    
-    df = view_position_status()
-    text_file_path = f'pkl_obj/Holding_{ts}.txt'
-    df_to_text(file_path=text_file_path, df=df)
-    
-    df1 = view_pnl()
-    pnl_file_path = f'pkl_obj/PnL_{ts}.txt'
-    df_to_text(file_path=pnl_file_path, df=df1)
-    
-    files = [text_file_path, pnl_file_path]
-    send_docs(docs=files)
-    remove_files(files)
 
 def print_android(str):
     space = 4 * " "
@@ -620,15 +622,11 @@ def file_operation_menu():
             file_operate.file_operate('positions.csv')
 
         elif choice == '2':
-            send_positions()
+            # send_positions()
+            view_position_status()
             print_android('Positions sent to the telegram.')
-            
             view_stock_transactions()
-            
             view_monthly_investment()
-            
-            #time.sleep(8)
-#            clear_console()
 
         elif choice == '3':
             get_ema_signals()
@@ -643,9 +641,11 @@ def file_operation_menu():
             generate_session()
 
         elif choice == '0':  # New delete functionality
+
             break  # Update the DataFrame with the result of deletion
 
         elif choice == '10':
+
             print_android("Clearing Console.")
             time.sleep(1)  # Pause for 3 seconds so you can see the text before it clears
             clear_console()
