@@ -71,7 +71,7 @@ def file_operate(filepath='positions.csv'):
                     new_date = validate_date(date_input)
                     df.loc[index, 'date'] = new_date
                 # Clean up the temporary validation column
-                df.drop(columns=['validated_date'], inplace=True, errors='ignore')
+                # df.drop(columns=['validated_date'], inplace=True, errors='ignore')
                 # save the df in original location
                 save_data(df)
             else:
@@ -209,7 +209,6 @@ def file_operate(filepath='positions.csv'):
                     if tran_input:
                         data.loc[selected_row_index, 'tran_type'] = validate_stock_name(tran_input)  # for upper case
 
-                    save_data(data)
                     print_android("Entry updated.")
                     return data
                 elif modify_confirm == 'n':
@@ -255,7 +254,7 @@ def file_operate(filepath='positions.csv'):
         }], index=[next_index])
 
         data = pd.concat([data, new_entry])
-        save_data(data)
+        # save_data(data)
         print_android("New entry added.")
         return data
 
@@ -290,7 +289,7 @@ def file_operate(filepath='positions.csv'):
             #     print(f"Warning: {initial_rows - len(df)} rows were dropped due to unparseable dates.")
 
             # Sort the DataFrame by the 'date' column
-            df_sorted = df.sort_values(by='date', ascending=True)
+            df_sorted = df.sort_values(by=['date', 'stock_name'], ascending=True)
     
             # Reset the 'index' column to incremental numbers
             # We use range(1, len(df_sorted) + 1) to start the index from 1
@@ -467,7 +466,7 @@ def file_operate(filepath='positions.csv'):
                     data = data.drop(indices_to_delete)
                     # Reset index after deletion to maintain a continuous integer index
                     data = data.reset_index(drop=True)
-                    save_data(data)
+                    # save_data(data)
                     print_android("Entry(ies) deleted successfully.")
                     return data # Return the modified DataFrame
                 elif confirm == 'n':
@@ -779,23 +778,27 @@ def file_operate(filepath='positions.csv'):
 
         if choice == '1':
             df = modify_existing_entry(data=df)
+            save_data(df)
         elif choice == '2':
             df = add_new_entry(data=df)
+            save_data(df)
         elif choice == '3':
             view_records(df)
         elif choice == '4': # New delete functionality
             df = delete_entry(data=df) # Update the DataFrame with the result of deletion
+            save_data(df)
 
         elif choice == '5': # Shifted option
             clear_console()
             break
 
         elif choice == '6': # Shifted option
-            generate_reports()
+            save_data(df)
 
         elif choice == '0': # Shifted option
-            print_android("Clearing Console.")
+            save_data(df)
             time.sleep(1)  # Pause for 3 seconds so you can see the text before it clears
+            print_android("Clearing Console.")
             clear_console()
         else:
             print_android("Invalid choice. Please enter a number between 1 and 6.")
